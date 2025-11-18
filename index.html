@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Abhiyanthriki '25 - RSET Tech Fest</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Orbitron', monospace; /* Cyberpunk font */
+        }
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap');
+
+        :root {
+            --primary: #e52d27;
+            --secondary: #000;
+            --accent: #ff4757;
+            --text: #fff;
+            --grid: #1a1a1a;
+        }
+
+        body {
+            background: var(--secondary);
+            color: var(--text);
+            overflow-x: hidden;
+            cursor: none; /* Hide default cursor */
+        }
+
+        /* Custom Cursor */
+        .cursor {
+            position: fixed;
+            width: 20px;
+            height: 20px;
+            background: var(--primary);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            mix-blend-mode: difference;
+            transition: transform 0.1s ease;
+        }
+        .cursor::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 4px;
+            height: 4px;
+            background: var(--text);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+        }
+        .cursor.hover {
+            transform: scale(2);
+        }
+        .cursor.click {
+            transform: scale(0);
+            transition: transform 0.1s ease;
+        }
+
+        /* Grid Pattern Background */
+        .grid-pattern {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image:
+                linear-gradient(rgba(229, 45, 39, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(229, 45, 39, 0.05) 1px, transparent 1px);
+            background-size: 50px 50px;
+            z-index: -1;
+            animation: gridFloat 20s linear infinite;
+        }
+        @keyframes gridFloat {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50px, 50px); }
+        }
+
+        header {
+            padding: 20px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            z-index: 10;
+            animation: slideInDown 1s ease-out;
+        }
+        @keyframes slideInDown {
+            from { transform: translateY(-100%); }
+            to { transform: translateY(0); }
+        }
+        .logo {
+            font-size: 2rem;
+            font-weight: 900;
+            background: linear-gradient(45deg, var(--primary), var(--text));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+        nav a {
+            color: var(--text);
+            text-decoration: none;
+            text-transform: uppercase;
+            font-weight: 700;
+            letter-spacing: 1px;
+            position: relative;
+            transition: all 0.3s ease;
+            cursor: none;
+        }
+        nav a:hover {
+            color: var(--primary);
+            text-shadow: 0 0 10px var(--primary);
+        }
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: width 0.3s ease;
+        }
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Section with Countdown */
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            text-align: center;
+            animation: fadeIn 2s ease-in;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .hero h1 {
+            font-size: 6rem;
+            font-weight: 900;
+            background: linear-gradient(45deg, var(--primary), var(--text));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 20px;
+            text-shadow: 0 0 20px var(--primary);
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+        @keyframes glow {
+            from { filter: drop-shadow(0 0 5px var(--primary)); }
+            to { filter: drop-shadow(0 0 20px var(--primary)); }
+        }
+        .hero .subtitle {
+            font-size: 1.8rem;
+            margin-bottom: 40px;
+            opacity: 0.8;
+            animation: slideUp 1s ease-out 0.5s both;
+        }
+        @keyframes slideUp {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        .countdown {
+            display: flex;
+            gap: 30px;
+            margin: 40px 0;
+            animation: slideUp 1s ease-out 1s both;
+        }
+        .countdown-item {
+            text-align: center;
+            background: rgba(229, 45, 39, 0.1);
+            padding: 20px;
+            border: 1px solid var(--primary);
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+        .countdown-item:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 15px var(--primary);
+        }
+        .countdown-value {
+            font-size: 3rem;
+            font-weight: 900;
+            color: var(--primary);
+            display: block;
+        }
+        .countdown-label {
+            font-size: 0.9rem;
+            opacity: 0.7;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .btn {
+            display: inline-block;
+            padding: 15px 40px;
+            background: transparent;
+            color: var(--primary);
+            text-decoration: none;
+            border: 2px solid var(--primary);
+            border-radius: 50px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transition: all 0.3s ease;
+            cursor: none;
+            position: relative;
+            overflow: hidden;
+            animation: slideUp 1s ease-out 1.5s both;
+        }
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+        .btn:hover::before {
+            left: 100%;
+        }
+        .btn:hover {
+            background: var(--primary);
+            color: var(--text);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(229, 45, 39, 0.4);
+        }
+
+        /* Sections */
+        .section {
+            padding: 100px 5%;
+            min-height: 100vh;
+            position: relative;
+        }
+        .section-title {
+            text-align: center;
+            font-size: 4rem;
+            font-weight: 900;
+            color: var(--primary);
+            margin-bottom: 60px;
+            position: relative;
+            animation: slideInUp 1s ease-out;
+        }
+        @keyframes slideInUp {
+            from { transform: translateY(100px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: var(--primary);
+            border-radius: 2px;
+        }
+
+        /* About Section */
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+            animation: slideInLeft 1s ease-out;
+        }
+        @keyframes slideInLeft {
+            from { transform: translateX(-100px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        .about-text p {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-top: 40px;
+        }
+        .stat-card {
+            background: rgba(229, 45, 39, 0.1);
+            border: 1px solid var(--primary);
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: none;
+            animation: fadeInUp 1s ease-out 0.5s both;
+        }
+        @keyframes fadeInUp {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        .stat-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 15px 40px rgba(229, 45, 39, 0.3);
+        }
+        .stat-number {
+            font-size: 2.5rem;
+            color: var(--primary);
+            font-weight: 900;
+            display: block;
+        }
+        .stat-label {
+            font-size: 1rem;
+            opacity: 0.8;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .college-image {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            border-radius: 20px;
+            border: 2px solid var(--primary);
+            transition: all 0.3s ease;
+        }
+        .college-image:hover {
+            transform: scale(1.05);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+        }
+
+        /* Events Section */
+        .event-cards {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            flex-wrap: wrap;
+            margin-top: 60px;
+        }
+        .event-card {
+            width: 320px;
+            height: 450px;
+            background: linear-gradient(135deg, rgba(0,0,0,0.8), rgba(229,45,39,0.1));
+            border: 2px solid var(--primary);
+            border-radius: 20px;
+            overflow: hidden;
+            position: relative;
+            transition: all 0.4s ease;
+            cursor: none;
+            animation: slideInUp 1s ease-out;
+        }
+        .event-card:hover {
+            transform: translateY(-15px) rotate(1deg);
+            box-shadow: 0 25px 50px rgba(229, 45, 39, 0.4);
+        }
+        .event-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+            transform: rotate(45deg);
+            transition: all 0.5s;
+            opacity: 0;
+        }
+        .event-card:hover::before {
+            opacity: 1;
+            top: 0;
+            left: 0;
+            animation: shine 0.5s ease;
+        }
+        @keyframes shine {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+        }
+        .event-content {
+            position: relative;
+            z-index: 2;
+            padding: 30px;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            text-align: center;
+        }
+        .event-type {
+            writing-mode: vertical-rl;
+            text-orientation: mixed;
+            font-size: 1.8rem;
+            font-weight: 900;
+            color: var(--primary);
+            letter-spacing: 2px;
+            margin-bottom: 20px;
+        }
+        .event-title {
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin: 20px 0;
+            text-shadow: 0 0 10px var(--primary);
+        }
+        .event-description {
+            opacity: 0.8;
+            line-height: 1.6;
+        }
+
+        /* Gallery Section */
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 25px;
+            margin-top: 60px;
+        }
+        .gallery-item {
+            height: 300px;
+            overflow: hidden;
+            border-radius: 15px;
+            position: relative;
+            border: 2px solid transparent;
+            transition: all 0.4s ease;
+            cursor: none;
+        }
+        .gallery-item:hover {
+            border-color: var(--primary);
+            transform: scale(1.05);
+            box-shadow: 0 20px 40px rgba(229, 45, 39, 0.3);
+        }
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        .gallery-item:hover img {
+            transform: scale(1.2) rotate(2deg);
+        }
+
+        /* Contact Section */
+        .contact-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: start;
+            animation: slideInRight 1s ease-out;
+        }
+        @keyframes slideInRight {
+            from { transform: translateX(100px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        .quick-links {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .quick-links a {
+            color: var(--text);
+            text-decoration: none;
+            padding: 10px;
+            transition: color 0.3s ease;
+            cursor: none;
+        }
+        .quick-links a:hover {
+            color: var(--primary);
+        }
+        .contact-form {
+            background: rgba(0,0,0,0.5);
+            padding: 40px;
+            border-radius: 15px;
+            border: 1px solid var(--primary);
+        }
+        .contact-form input, .contact-form textarea {
+            width: 100%;
+            padding: 15px;
+            margin-bottom: 20px;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid var(--primary);
+            border-radius: 10px;
+            color: var(--text);
+            font-family: inherit;
+            transition: all 0.3s ease;
+        }
+        .contact-form input:focus, .contact-form textarea:focus {
+            outline: none;
+            box-shadow: 0 0 10px var(--primary);
+        }
+        .contact-form button {
+            width: 100%;
+            padding: 15px;
+            background: var(--primary);
+            color: var(--text);
+            border: none;
+            border-radius: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            cursor: none;
+            transition: all 0.3s ease;
+        }
+        .contact-form button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(229,45,39,0.4);
+        }
+        .map-container {
+            height: 300px;
+            border-radius: 15px;
+            overflow: hidden;
+            border: 2px solid var(--primary);
+        }
+        .map-container iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        footer {
+            background: var(--secondary);
+            padding: 40px 5%;
+            text-align: center;
+            border-top: 1px solid var(--primary);
+            animation: fadeIn 1s ease-out 0.5s both;
+        }
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .footer-logo {
+            font-size: 1.5rem;
+            color: var(--primary);
+            font-weight: 900;
+        }
+        .developed-by {
+            opacity: 0.6;
+            margin-top: 20px;
+            font-size: 0.9rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 3rem; }
+            .countdown { gap: 15px; }
+            .countdown-value { font-size: 2rem; }
+            .about-content, .contact-content { grid-template-columns: 1fr; gap: 30px; }
+            nav ul { gap: 15px; }
+            .event-cards { flex-direction: column; align-items: center; }
+            .gallery { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Custom Cursor -->
+    <div class="cursor"></div>
+
+    <div class="grid-pattern"></div>
+
+    <header>
+        <div class="logo">ABK '25</div>
+        <nav>
+            <ul>
+                <li><a href="#about">About</a></li>
+                <li><a href="#events">Events</a></li>
+                <li><a href="#gallery">Gallery</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <h1>Abhiyanthriki</h1>
+        <p class="subtitle">The Future Unfolds In...</p>
+        <div class="countdown">
+            <div class="countdown-item">
+                <span class="countdown-value" id="days">00</span>
+                <span class="countdown-label">Days</span>
+            </div>
+            <div class="countdown-item">
+                <span class="countdown-value" id="hours">00</span>
+                <span class="countdown-label">Hours</span>
+            </div>
+            <div class="countdown-item">
+                <span class="countdown-value" id="minutes">00</span>
+                <span class="countdown-label">Minutes</span>
+            </div>
+            <div class="countdown-item">
+                <span class="countdown-value" id="seconds">00</span>
+                <span class="countdown-label">Seconds</span>
+            </div>
+        </div>
+        <a href="#registration" class="btn">Register Now</a>
+    </section>
+
+    <section id="about" class="section">
+        <h2 class="section-title">About Abhiyanthriki</h2>
+        <div class="about-content">
+            <div class="about-text">
+                <p>Abhiyanthriki, the annual technical festival of Rajagiri School of Engineering & Technology (RSET), is a premier platform celebrating academic brilliance, cutting-edge technology, and creative innovation. Spanning two dynamic days, it showcases vibrant workshops, technical and non-technical contests, exhibitions, and stalls, drawing participation from across the region.</p>
+                <div class="stats">
+                    <div class="stat-card">
+                        <span class="stat-number">1.2K+</span>
+                        <span class="stat-label">Followers</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-number">6000+</span>
+                        <span class="stat-label">Expected</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-number">15.4K+</span>
+                        <span class="stat-label">Account Reach</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-number">28K+</span>
+                        <span class="stat-label">Interactions</span>
+                    </div>
+                </div>
+            </div>
+            <img src="https://via.placeholder.com/600x400/1a1a1a/e52d27?text=RSET+Campus" alt="RSET Campus" class="college-image">
+        </div>
+    </section>
+
+    <section id="events" class="section">
+        <h2 class="section-title">Events</h2>
+        <div class="event-cards">
+            <div class="event-card">
+                <div class="event-content">
+                    <div class="event-type">PRE-EVENTS</div>
+                    <h3 class="event-title">Keyboard Challenge</h3>
+                    <div class="event-description">
+                        <p>Pre-event coding and tech workshops to gear up for the main fest.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="event-card">
+                <div class="event-content">
+                    <div class="event-type">TECHNICAL</div>
+                    <h3 class="event-title">Robotics Arena</h3>
+                    <div class="event-description">
+                        <p>Build, program, and compete with advanced robotic designs.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="event-card">
+                <div class="event-content">
+                    <div class="event-type">NON-TECHNICAL</div>
+                    <h3 class="event-title">Music Tech Fusion</h3>
+                    <div class="event-description">
+                        <p>Blend creativity with technology in innovative performances.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="gallery" class="section">
+        <h2 class="section-title">Gallery</h2>
+        <div class="gallery">
+            <div class="gallery-item">
+                <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Event Photo 1">
+            </div>
+            <div class="gallery-item">
+                <img src="https://images.unsplash.com/photo-1573496359142-b8d8778a85c0?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Event Photo 2">
+            </div>
+            <div class="gallery-item">
+                <img src="https://images.unsplash.com/photo-1581094792272-fd5200d4d087?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Event Photo 3">
+            </div>
+            <div class="gallery-item">
+                <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Event Photo 4">
+            </div>
+            <div class="gallery-item">
+                <img src="https://images.unsplash.com/photo-1573496359142-b8d8778a85c0?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Event Photo 5">
+            </div>
+            <div class="gallery-item">
+                <img src="https://images.unsplash.com/photo-1581094792272-fd5200d4d087?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Event Photo 6">
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="section">
+        <h2 class="section-title">Contact</h2>
+        <div class="contact-content">
+            <div>
+                <h3 style="font-size: 2rem; color: var(--primary); margin-bottom: 20px;">Quick Links</h3>
+                <div class="quick-links">
+                    <a href="#">Home</a>
+                    <a href="#events">Events</a>
+                    <a href="#registration">Registration</a>
+                </div>
+                <div class="map-container" style="margin-top: 40px;">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3927.361!2d76.412!3d10.032!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMTHCsDAxJzIyLjgiTiA3NMKwMjQnNDguMiJF!5e0!3m2!1sen!2sin!4v1630000000000" allowfullscreen="" loading="lazy"></iframe>
+                </div>
+            </div>
+            <div class="contact-form">
+                <h3 style="font-size: 2rem; color: var(--primary); margin-bottom: 20px;">Send Feedback</h3>
+                <input type="text" placeholder="Your Name" required>
+                <input type="email" placeholder="Your Email" required>
+                <textarea rows="5" placeholder="Your Feedback" required></textarea>
+                <button type="submit">Send Feedback</button>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-logo">ABK '25</div>
+            <div class="developed-by">Developed with ❤️ by Arun Ujwal, Abhishikth & Neehar</div>
+        </div>
+    </footer>
+
+    <script>
+        // Custom Cursor
+        const cursor = document.querySelector('.cursor');
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+        });
+        document.querySelectorAll('a, button, .event-card, .gallery-item, .stat-card').forEach(el => {
+            el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
+            el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
+            el.addEventListener('mousedown', () => cursor.classList.add('click'));
+            el.addEventListener('mouseup', () => cursor.classList.remove('click'));
+        });
+
+        // Countdown Timer (Set to Oct 15, 2025 - but since date is Nov 18, 2025, it will show 00)
+        function updateCountdown() {
+            const eventDate = new Date('2025-10-15T00:00:00');
+            const now = new Date();
+            const diff = eventDate - now;
+            if (diff <= 0) {
+                document.getElementById('days').textContent = '00';
+                document.getElementById('hours').textContent = '00';
+                document.getElementById('minutes').textContent = '00';
+                document.getElementById('seconds').textContent = '00';
+                return;
+            }
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24)).toString().padStart(2, '0');
+            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)).toString().padStart(2, '0');
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60)).toString().padStart(2, '0');
+            const seconds = Math.floor((diff % (1000 * 60)) / 1000).toString().padStart(2, '0');
+            document.getElementById('days').textContent = days;
+            document.getElementById('hours').textContent = hours;
+            document.getElementById('minutes').textContent = minutes;
+            document.getElementById('seconds').textContent = seconds;
+        }
+        updateCountdown();
+        setInterval(updateCountdown, 1000);
+
+        // Smooth Scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+
+        // Intersection Observer for Animations
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        });
+        document.querySelectorAll('.section').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(50px)';
+            el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
