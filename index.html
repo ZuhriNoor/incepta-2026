@@ -2,8 +2,9 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
     <title>INCEPTA 2026 - AI Agents & Generative AI | CET</title>
+    <meta name="description" content="Premier technical festival focused on AI Agents & Generative AI at College of Engineering, Trivandrum.">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
@@ -16,12 +17,18 @@
             --gold: #f39c12;
             --silver: #bdc3c7;
             --platinum: #e5e4e2;
+            --mobile-breakpoint: 768px;
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 80px;
         }
 
         body {
@@ -33,22 +40,26 @@
             min-height: 100vh;
             background-attachment: fixed;
             line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
 
         body.sidebar-open {
             overflow: hidden;
+            touch-action: none;
         }
 
-        /* --- Background Effects --- */
+        /* --- Background Effects (Optimized) --- */
         .wave-background {
             position: fixed;
             bottom: 0;
             left: 0;
             width: 100%;
-            height: 50%;
+            height: 40%;
             z-index: -2;
             overflow: hidden;
             pointer-events: none;
+            opacity: 0.6;
         }
 
         .wave {
@@ -59,14 +70,7 @@
             height: 100%;
             background: url('data:image/svg+xml;utf8,<svg viewBox="0 0 1440 320" xmlns="http://www.w3.org/2000/svg"><path fill="%233B2A45" fill-opacity="0.5" d="M0,192L48,197.3C96,203,192,213,288,229.3C384,245,480,267,576,250.7C672,235,768,181,864,181.3C960,181,1056,235,1152,234.7C1248,235,1344,181,1392,154.7L1440,128L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>');
             background-size: 50% 100%;
-            animation: waveAnimation 20s linear infinite;
-            opacity: 0.6;
-        }
-
-        .wave:nth-child(2) {
-            bottom: 10px;
-            opacity: 0.4;
-            animation: waveAnimation 15s linear infinite reverse;
+            animation: waveAnimation 25s linear infinite;
         }
 
         @keyframes waveAnimation {
@@ -88,40 +92,52 @@
             position: absolute;
             background: radial-gradient(circle, var(--pale-pinkish-lavender), transparent);
             border-radius: 50%;
-            animation: float 15s ease-in-out infinite;
-            opacity: 0.3;
+            animation: float 20s ease-in-out infinite;
+            opacity: 0.2;
+            will-change: transform;
         }
 
         @keyframes float {
-            0% { transform: translateY(0) rotate(0deg); opacity: 0.2; }
-            50% { transform: translateY(-100px) rotate(180deg); opacity: 0.5; }
-            100% { transform: translateY(0) rotate(360deg); opacity: 0.2; }
+            0% { transform: translateY(0) rotate(0deg); opacity: 0.1; }
+            50% { transform: translateY(-80px) rotate(180deg); opacity: 0.3; }
+            100% { transform: translateY(0) rotate(360deg); opacity: 0.1; }
         }
 
-        /* --- Cursor --- */
-        .cursor, .cursor-follower {
-            position: fixed;
-            border-radius: 50%;
-            pointer-events: none;
-            z-index: 9999;
-            transition: transform 0.05s ease-out, opacity 0.3s;
-            will-change: transform, left, top;
-        }
+        /* --- Custom Cursor (Disabled on Touch) --- */
+        @media (hover: hover) and (pointer: fine) {
+            .cursor, .cursor-follower {
+                position: fixed;
+                border-radius: 50%;
+                pointer-events: none;
+                z-index: 9999;
+                transition: transform 0.05s ease-out, opacity 0.3s;
+                will-change: transform, left, top;
+            }
 
-        .cursor {
-            width: 10px;
-            height: 10px;
-            background: var(--accent-pink);
-            transform: translate(-50%, -50%);
-        }
+            .cursor {
+                width: 8px;
+                height: 8px;
+                background: var(--accent-pink);
+                transform: translate(-50%, -50%);
+            }
 
-        .cursor-follower {
-            width: 30px;
-            height: 30px;
-            border: 1px solid var(--misty-lavender-glow);
-            background: rgba(255,255,255,0.05);
-            transform: translate(-50%, -50%);
-            transition: transform 0.08s ease-out, left 0.08s ease-out, top 0.08s ease-out, border-color 0.3s;
+            .cursor-follower {
+                width: 24px;
+                height: 24px;
+                border: 1px solid var(--misty-lavender-glow);
+                background: rgba(255,255,255,0.05);
+                transform: translate(-50%, -50%);
+                transition: transform 0.12s ease-out, left 0.12s ease-out, top 0.12s ease-out, border-color 0.3s;
+            }
+
+            .cursor-hover {
+                transform: translate(-50%, -50%) scale(1.5);
+            }
+
+            .cursor-follower-hover {
+                transform: translate(-50%, -50%) scale(1.8);
+                border-color: var(--accent-pink);
+            }
         }
 
         /* --- Header --- */
@@ -133,49 +149,53 @@
             position: fixed;
             top: 0;
             width: 100%;
-            z-index: 100;
-            backdrop-filter: blur(10px);
-            background: rgba(13, 6, 16, 0.9);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-            transition: all 0.3s ease;
+            z-index: 1000;
+            backdrop-filter: blur(12px);
+            background: rgba(13, 6, 16, 0.95);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            transition: transform 0.3s ease;
             height: 70px;
+            backface-visibility: hidden;
         }
 
         .logo {
-            font-size: 1.5rem;
+            font-size: clamp(1.2rem, 2.5vw, 1.5rem);
             font-weight: 800;
-            letter-spacing: 1px;
+            letter-spacing: 0.5px;
             color: white;
             display: flex;
             align-items: center;
             gap: 10px;
+            text-decoration: none;
+            transition: transform 0.3s;
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
         }
 
         .logo img {
-            height: 45px;
+            height: 42px;
             width: auto;
             filter: drop-shadow(0 0 5px rgba(232, 74, 143, 0.5));
             transition: transform 0.3s;
         }
 
-        .logo:hover img {
-            transform: scale(1.05);
-        }
-
         nav ul {
             display: flex;
             list-style: none;
-            gap: 25px;
+            gap: clamp(15px, 2vw, 25px);
         }
 
         nav a {
-            color: rgba(255, 255, 255, 0.8);
+            color: rgba(255, 255, 255, 0.85);
             text-decoration: none;
             font-weight: 500;
-            font-size: 0.95rem;
+            font-size: clamp(0.85rem, 1.5vw, 0.95rem);
             transition: all 0.3s;
             position: relative;
-            padding: 5px 0;
+            padding: 8px 0;
+            white-space: nowrap;
         }
 
         nav a:hover {
@@ -187,7 +207,7 @@
             position: absolute;
             width: 0;
             height: 2px;
-            bottom: -4px;
+            bottom: 0;
             left: 0;
             background-color: var(--accent-pink);
             transition: width 0.3s;
@@ -202,13 +222,14 @@
             display: none;
             flex-direction: column;
             justify-content: space-between;
-            width: 25px;
-            height: 20px;
+            width: 30px;
+            height: 22px;
             background: transparent;
             border: none;
             cursor: pointer;
             padding: 0;
-            z-index: 101;
+            z-index: 1001;
+            transition: transform 0.3s;
         }
 
         .burger-menu span {
@@ -220,8 +241,12 @@
             transform-origin: center;
         }
 
+        .burger-menu.active {
+            transform: rotate(90deg);
+        }
+
         .burger-menu.active span:nth-child(1) {
-            transform: rotate(45deg) translate(5px, 5px);
+            transform: rotate(45deg) translate(6px, 6px);
         }
 
         .burger-menu.active span:nth-child(2) {
@@ -237,18 +262,20 @@
             position: fixed;
             top: 0;
             right: -100%;
-            width: 80%;
-            max-width: 320px;
+            width: min(85vw, 320px);
             height: 100vh;
-            background: rgba(13, 6, 16, 0.95);
+            max-height: 100vh;
+            overflow-y: auto;
+            background: rgba(13, 6, 16, 0.98);
             backdrop-filter: blur(20px);
-            z-index: 1000;
+            z-index: 999;
             transition: right 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-            padding: 80px 30px 40px;
+            padding: clamp(60px, 10vh, 80px) 25px 40px;
             display: flex;
             flex-direction: column;
             gap: 20px;
             border-left: 1px solid rgba(255,255,255,0.1);
+            overscroll-behavior: contain;
         }
 
         .sidebar.active {
@@ -259,13 +286,13 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 30px;
+            margin-bottom: 25px;
             padding-bottom: 20px;
             border-bottom: 1px solid rgba(255,255,255,0.1);
         }
 
         .sidebar-logo {
-            font-size: 1.3rem;
+            font-size: clamp(1.1rem, 3vw, 1.3rem);
             font-weight: 800;
             color: var(--accent-pink);
         }
@@ -294,19 +321,19 @@
         .sidebar-nav {
             display: flex;
             flex-direction: column;
-            gap: 15px;
+            gap: 10px;
         }
 
         .sidebar-nav a {
-            color: rgba(255, 255, 255, 0.8);
+            color: rgba(255, 255, 255, 0.9);
             text-decoration: none;
-            font-size: 1.1rem;
+            font-size: clamp(0.95rem, 2.5vw, 1.1rem);
             padding: 12px 15px;
             border-radius: 10px;
             transition: all 0.3s;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
         }
 
         .sidebar-nav a:hover {
@@ -318,6 +345,7 @@
         .sidebar-nav a i {
             width: 20px;
             text-align: center;
+            font-size: 1.1rem;
         }
 
         .sidebar-footer {
@@ -330,7 +358,7 @@
         .sidebar-footer p {
             font-size: 0.85rem;
             color: rgba(255,255,255,0.5);
-            margin-top: 10px;
+            margin-bottom: 15px;
         }
 
         /* --- Overlay --- */
@@ -340,12 +368,13 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0,0,0,0.7);
-            z-index: 999;
+            background: rgba(0,0,0,0.8);
+            z-index: 998;
             opacity: 0;
             visibility: hidden;
             transition: all 0.3s;
             backdrop-filter: blur(5px);
+            touch-action: none;
         }
 
         .overlay.active {
@@ -361,13 +390,14 @@
             justify-content: center;
             align-items: center;
             text-align: center;
-            padding: 100px 20px 50px;
+            padding: 90px 20px 50px;
             position: relative;
             z-index: 5;
+            overflow: hidden;
         }
 
         .hero-title {
-            font-size: clamp(2.5rem, 8vw, 5.5rem);
+            font-size: clamp(2rem, 8vw, 5rem);
             font-weight: 900;
             margin-bottom: 15px;
             line-height: 1.1;
@@ -377,7 +407,8 @@
             color: transparent;
             filter: drop-shadow(0 0 20px rgba(232, 74, 143, 0.3));
             animation: titleFloat 4s ease-in-out infinite;
-            letter-spacing: -1px;
+            letter-spacing: -0.5px;
+            word-break: break-word;
         }
 
         @keyframes titleFloat {
@@ -386,22 +417,22 @@
         }
 
         .hero-subtitle {
-            font-size: clamp(1rem, 3vw, 1.25rem);
+            font-size: clamp(0.9rem, 2.5vw, 1.2rem);
             margin-bottom: 25px;
-            max-width: 700px;
+            max-width: min(700px, 90%);
             color: rgba(255, 255, 255, 0.9);
             font-weight: 300;
-            padding: 0 20px;
+            padding: 0 10px;
         }
 
         .date {
-            font-size: clamp(1.3rem, 4vw, 1.8rem);
+            font-size: clamp(1.1rem, 3.5vw, 1.6rem);
             font-weight: 700;
             color: var(--accent-pink);
             margin-bottom: 30px;
-            letter-spacing: 1px;
+            letter-spacing: 0.5px;
             display: inline-block;
-            padding: 10px 25px;
+            padding: 10px 20px;
             background: rgba(232, 74, 143, 0.1);
             border-radius: 50px;
             border: 1px solid rgba(232, 74, 143, 0.3);
@@ -411,40 +442,30 @@
             background: linear-gradient(45deg, var(--accent-pink), #c04ba0);
             color: white;
             border: none;
-            padding: 16px 40px;
-            font-size: clamp(0.9rem, 2.5vw, 1.1rem);
+            padding: 14px 30px;
+            font-size: clamp(0.85rem, 2vw, 1rem);
             font-weight: 600;
             border-radius: 50px;
             cursor: pointer;
             transition: all 0.3s;
             text-transform: uppercase;
-            letter-spacing: 1px;
-            box-shadow: 0 10px 30px rgba(232, 74, 143, 0.3);
+            letter-spacing: 0.5px;
+            box-shadow: 0 8px 25px rgba(232, 74, 143, 0.4);
             position: relative;
             overflow: hidden;
             z-index: 1;
+            min-height: 44px;
+            min-width: 120px;
+            line-height: 1.2;
         }
 
-        .cta-button::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(45deg, #c04ba0, var(--accent-pink));
-            opacity: 0;
-            transition: opacity 0.3s;
-            z-index: -1;
+        .cta-button:active {
+            transform: scale(0.95) !important;
         }
 
         .cta-button:hover {
             transform: translateY(-3px);
-            box-shadow: 0 15px 40px rgba(232, 74, 143, 0.5);
-        }
-
-        .cta-button:hover::before {
-            opacity: 1;
+            box-shadow: 0 12px 35px rgba(232, 74, 143, 0.6);
         }
 
         /* --- Floating Register Button --- */
@@ -468,17 +489,17 @@
         }
 
         .floating-register .cta-button {
-            padding: 12px 25px;
-            font-size: 0.9rem;
+            padding: 10px 20px;
+            font-size: 0.85rem;
             box-shadow: 0 5px 20px rgba(232, 74, 143, 0.4);
         }
 
         /* --- Common Section Styles --- */
         .section {
-            padding: 80px 5%;
+            padding: 60px 5%;
             opacity: 0;
             transform: translateY(30px);
-            transition: opacity 0.8s ease, transform 0.8s ease;
+            transition: opacity 0.6s ease, transform 0.6s ease;
         }
 
         .section.visible {
@@ -487,12 +508,13 @@
         }
 
         .section-title {
-            font-size: clamp(2rem, 5vw, 2.8rem);
-            margin-bottom: 50px;
+            font-size: clamp(1.8rem, 5vw, 2.5rem);
+            margin-bottom: 40px;
             text-align: center;
             color: white;
             position: relative;
             font-weight: 800;
+            line-height: 1.2;
         }
 
         .section-title::after {
@@ -507,29 +529,29 @@
 
         .section-subtitle {
             text-align: center;
-            color: rgba(255,255,255,0.6);
-            margin-top: -35px;
-            margin-bottom: 50px;
-            font-size: clamp(0.9rem, 2.5vw, 1.1rem);
-            max-width: 700px;
+            color: rgba(255,255,255,0.65);
+            margin-top: -20px;
+            margin-bottom: 40px;
+            font-size: clamp(0.85rem, 2vw, 1rem);
+            max-width: min(700px, 90%);
             margin-left: auto;
             margin-right: auto;
-            padding: 0 20px;
+            padding: 0 10px;
         }
 
         /* --- About Grid --- */
         .about-content {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 30px;
+            gap: clamp(20px, 3vw, 30px);
             align-items: start;
         }
 
         .about-text {
             background: rgba(255, 255, 255, 0.03);
-            padding: 25px;
-            border-radius: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: clamp(20px, 3vw, 25px);
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
             backdrop-filter: blur(5px);
             transition: all 0.3s;
         }
@@ -542,11 +564,12 @@
 
         .about-text h3 {
             color: var(--accent-pink);
-            font-size: 1.3rem;
-            margin-bottom: 15px;
+            font-size: clamp(1.1rem, 2.5vw, 1.3rem);
+            margin-bottom: 12px;
             display: flex;
             align-items: center;
             gap: 10px;
+            line-height: 1.3;
         }
 
         .about-text h3::before {
@@ -560,25 +583,27 @@
         .about-text p {
             line-height: 1.7;
             color: rgba(255, 255, 255, 0.85);
-            margin-bottom: 20px;
-            font-size: 0.9rem;
+            margin-bottom: 15px;
+            font-size: clamp(0.85rem, 1.8vw, 0.9rem);
         }
 
         /* --- Events Grid --- */
         .events-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 25px;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: clamp(15px, 2.5vw, 25px);
         }
 
         .event-card {
             background: rgba(59, 42, 69, 0.4);
-            border-radius: 16px;
-            padding: 25px;
+            border-radius: 14px;
+            padding: clamp(20px, 3vw, 25px);
             border: 1px solid rgba(255, 255, 255, 0.05);
             transition: all 0.3s;
             position: relative;
             overflow: hidden;
+            display: flex;
+            flex-direction: column;
         }
 
         .event-card::before {
@@ -594,10 +619,10 @@
         }
 
         .event-card:hover {
-            transform: translateY(-8px);
+            transform: translateY(-5px);
             border-color: var(--accent-pink);
             background: rgba(59, 42, 69, 0.6);
-            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
         }
 
         .event-card:hover::before {
@@ -605,9 +630,9 @@
         }
 
         .event-icon {
-            font-size: 2rem;
+            font-size: clamp(1.5rem, 4vw, 2rem);
             color: var(--accent-pink);
-            margin-bottom: 15px;
+            margin-bottom: 12px;
             transition: transform 0.3s;
         }
 
@@ -616,80 +641,102 @@
         }
 
         .event-title {
-            font-size: 1.2rem;
-            margin-bottom: 10px;
+            font-size: clamp(1.1rem, 2.5vw, 1.2rem);
+            margin-bottom: 8px;
             color: white;
             font-weight: 700;
+            line-height: 1.3;
         }
 
         .event-description {
-            font-size: 0.85rem;
+            font-size: clamp(0.8rem, 1.8vw, 0.85rem);
             color: rgba(255, 255, 255, 0.7);
             line-height: 1.6;
+            flex-grow: 1;
         }
 
-        /* --- Enhanced Gallery --- */
+        /* --- Enhanced Gallery (Mobile Optimized) --- */
         #gallery {
             padding: 60px 0;
             overflow: hidden;
             background: rgba(0,0,0,0.1);
-            perspective: 1000px;
         }
 
         .gallery-wrapper {
             position: relative;
             width: 100%;
             overflow: hidden;
-            mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
-            -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+            padding: 10px 0;
         }
 
         .gallery-container {
             display: flex;
             flex-direction: column;
-            gap: 20px;
-            transform: scale(1.05);
+            gap: clamp(10px, 2vw, 20px);
         }
 
         .gallery-row {
             width: 100%;
             position: relative;
             display: flex;
+            overflow-x: auto;
+            overflow-y: hidden;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+            scroll-snap-type: x mandatory;
+        }
+
+        .gallery-row::-webkit-scrollbar {
+            display: none;
         }
 
         .gallery-track {
             display: flex;
-            gap: 15px;
+            gap: clamp(10px, 2vw, 15px);
             width: max-content;
-            will-change: transform;
+            animation: none !important;
+            scroll-snap-align: start;
         }
 
         .gallery-img {
-            width: 250px;
-            height: 160px;
+            width: clamp(200px, 35vw, 250px);
+            height: clamp(120px, 25vw, 160px);
             border-radius: 12px;
             object-fit: cover;
             filter: grayscale(60%);
             transition: filter 0.3s, transform 0.3s;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
             flex-shrink: 0;
             cursor: pointer;
+            scroll-snap-align: start;
         }
 
         .gallery-img:hover {
             filter: grayscale(0%);
-            transform: scale(1.15);
+            transform: scale(1.05);
             z-index: 10;
-            box-shadow: 0 20px 40px rgba(232, 74, 143, 0.4);
+            box-shadow: 0 15px 30px rgba(232, 74, 143, 0.4);
         }
 
-        /* Row Specific Movements */
-        .row-1 { transform: rotate(-2deg) translateY(-10px); z-index: 1; }
-        .row-1 .gallery-track { animation: scrollLeft 40s linear infinite; }
-        .row-2 { transform: rotate(2deg) translateY(0px); z-index: 2; }
-        .row-2 .gallery-track { animation: scrollRight 35s linear infinite; }
-        .row-3 { transform: rotate(-2deg) translateY(10px); z-index: 1; }
-        .row-3 .gallery-track { animation: scrollLeft 45s linear infinite; }
+        /* Desktop: Enable animations */
+        @media (min-width: 769px) {
+            .gallery-row {
+                overflow: visible;
+            }
+            
+            .gallery-track {
+                animation: scrollLeft 40s linear infinite !important;
+            }
+            
+            .row-2 .gallery-track {
+                animation: scrollRight 35s linear infinite !important;
+            }
+            
+            .gallery-img:hover {
+                transform: scale(1.15);
+            }
+        }
 
         @keyframes scrollLeft {
             0% { transform: translateX(0); }
@@ -710,25 +757,25 @@
 
         .stats-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+            gap: clamp(12px, 2vw, 20px);
             text-align: center;
         }
 
         .stat-card {
-            padding: 30px 20px;
+            padding: 20px 15px;
             background: rgba(255,255,255,0.03);
-            border-radius: 15px;
+            border-radius: 12px;
             transition: all 0.3s;
         }
 
         .stat-card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-3px);
             background: rgba(232, 74, 143, 0.1);
         }
 
         .stat-number {
-            font-size: 2.5rem;
+            font-size: clamp(1.8rem, 4vw, 2.5rem);
             font-weight: 800;
             color: var(--accent-pink);
             margin-bottom: 5px;
@@ -738,24 +785,24 @@
 
         .stat-label {
             color: rgba(255,255,255,0.7);
-            font-size: 0.85rem;
+            font-size: clamp(0.75rem, 1.8vw, 0.85rem);
+            line-height: 1.3;
         }
 
         /* --- Sponsorship Tiers --- */
         .sponsorship-tiers {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 25px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: clamp(20px, 3vw, 25px);
+            max-width: 1200px;
+            margin: 0 auto;
         }
 
         .tier-card {
-            flex: 1 1 280px;
-            max-width: 350px;
             background: rgba(59, 42, 69, 0.3);
-            border-radius: 20px;
-            padding: 30px 25px;
-            padding-bottom: 50px;
+            border-radius: 16px;
+            padding: clamp(20px, 3vw, 30px);
+            padding-bottom: 60px;
             text-align: center;
             border: 1px solid rgba(255,255,255,0.05);
             transition: all 0.3s;
@@ -767,8 +814,8 @@
         }
 
         .tier-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+            transform: translateY(-8px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
         }
 
         .tier-card::before {
@@ -800,17 +847,17 @@
         }
 
         .tier-header {
-            font-size: 1.5rem;
-            margin-bottom: 10px;
+            font-size: clamp(1.3rem, 3vw, 1.5rem);
+            margin-bottom: 8px;
             color: white;
             font-weight: 800;
         }
 
         .tier-price {
-            font-size: 2rem;
+            font-size: clamp(1.5rem, 4vw, 2rem);
             font-weight: 800;
             color: white;
-            margin-bottom: 25px;
+            margin-bottom: 20px;
             display: block;
         }
 
@@ -826,14 +873,14 @@
         .tier-benefits {
             list-style: none;
             text-align: left;
-            margin-bottom: 25px;
+            margin-bottom: 20px;
             flex-grow: 1;
         }
 
         .tier-benefits li {
-            margin-bottom: 10px;
+            margin-bottom: 8px;
             color: rgba(255,255,255,0.8);
-            font-size: 0.85rem;
+            font-size: clamp(0.8rem, 1.8vw, 0.85rem);
             display: flex;
             align-items: start;
             transition: transform 0.2s;
@@ -848,6 +895,7 @@
             margin-right: 8px;
             margin-top: 4px;
             flex-shrink: 0;
+            font-size: 0.9rem;
         }
 
         .btn-tier {
@@ -861,14 +909,18 @@
             font-weight: 600;
             width: 100%;
             margin-top: auto;
-            position: relative;
-            overflow: hidden;
-            font-size: 0.9rem;
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            max-width: calc(100% - 40px);
+            font-size: clamp(0.8rem, 1.8vw, 0.9rem);
+            min-height: 40px;
         }
 
         .btn-tier:hover {
             background: var(--accent-pink);
-            transform: translateY(-2px);
+            transform: translateX(-50%) translateY(-2px);
         }
 
         /* --- Stall Section --- */
@@ -880,12 +932,14 @@
         .contact-container {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 40px;
+            gap: clamp(25px, 3vw, 40px);
             align-items: start;
+            max-width: 1200px;
+            margin: 0 auto;
         }
 
         .contact-info h3 {
-            font-size: 1.5rem;
+            font-size: clamp(1.3rem, 2.5vw, 1.5rem);
             margin-bottom: 20px;
             color: var(--accent-pink);
         }
@@ -893,14 +947,16 @@
         .contact-info p {
             color: rgba(255,255,255,0.7);
             margin-bottom: 25px;
+            font-size: clamp(0.85rem, 1.8vw, 0.9rem);
         }
 
         .contact-item {
             display: flex;
             align-items: center;
             margin-bottom: 15px;
-            color: rgba(255,255,255,0.8);
+            color: rgba(255,255,255,0.85);
             transition: transform 0.3s;
+            text-decoration: none;
         }
 
         .contact-item:hover {
@@ -919,7 +975,7 @@
             margin-right: 12px;
             flex-shrink: 0;
             transition: all 0.3s;
-            font-size: 0.9rem;
+            font-size: clamp(0.9rem, 2vw, 1rem);
         }
 
         .contact-item:hover i {
@@ -934,12 +990,12 @@
 
         .form-control {
             width: 100%;
-            padding: 12px;
+            padding: 12px 15px;
             border-radius: 10px;
             border: 1px solid rgba(255,255,255,0.1);
             background: rgba(0,0,0,0.2);
             color: white;
-            font-size: 0.9rem;
+            font-size: clamp(0.85rem, 1.8vw, 0.9rem);
             transition: all 0.3s;
         }
 
@@ -951,6 +1007,7 @@
             outline: none;
             border-color: var(--accent-pink);
             background: rgba(0,0,0,0.3);
+            box-shadow: 0 0 0 2px rgba(232, 74, 143, 0.2);
         }
 
         textarea.form-control {
@@ -961,7 +1018,7 @@
         /* --- Footer --- */
         footer {
             background: #0D0610;
-            padding: 50px 5% 20px;
+            padding: 40px 5% 20px;
             text-align: center;
             border-top: 1px solid rgba(255,255,255,0.05);
         }
@@ -969,8 +1026,9 @@
         .social-links {
             display: flex;
             justify-content: center;
-            gap: 15px;
+            gap: 12px;
             margin: 20px 0;
+            flex-wrap: wrap;
         }
 
         .social-link {
@@ -994,23 +1052,32 @@
 
         footer p {
             color: rgba(255,255,255,0.5);
-            font-size: 0.8rem;
+            font-size: clamp(0.75rem, 1.5vw, 0.8rem);
             margin-top: 15px;
+            line-height: 1.5;
         }
 
-        /* --- Responsive --- */
+        /* --- Responsive Design --- */
         @media (max-width: 768px) {
+            html {
+                scroll-padding-top: 60px;
+            }
+
+            body {
+                font-size: 14px;
+            }
+
             header {
-                padding: 10px 5%;
+                padding: 10px 4%;
                 height: 60px;
             }
 
             .logo {
-                font-size: 1.3rem;
+                font-size: 1.1rem;
             }
 
             .logo img {
-                height: 35px;
+                height: 32px;
             }
 
             nav ul {
@@ -1022,65 +1089,88 @@
             }
 
             .hero {
-                padding: 80px 15px 40px;
+                padding: 70px 15px 30px;
+                min-height: calc(100vh - 60px);
             }
 
             .hero-title {
-                font-size: 2.5rem;
+                font-size: 2.2rem;
+                letter-spacing: -0.5px;
+            }
+
+            .date {
+                padding: 8px 15px;
             }
 
             .section {
-                padding: 60px 5%;
+                padding: 50px 4%;
             }
 
             .section-title {
-                font-size: 2rem;
-                margin-bottom: 40px;
+                font-size: 1.8rem;
+                margin-bottom: 30px;
             }
 
             .section-subtitle {
-                margin-top: -25px;
-                margin-bottom: 40px;
+                margin-top: -15px;
+                margin-bottom: 30px;
             }
 
             .about-content {
                 grid-template-columns: 1fr;
-                gap: 25px;
+                gap: 20px;
+            }
+
+            .about-text {
+                padding: 20px;
+            }
+
+            .about-text h3 {
+                font-size: 1.1rem;
             }
 
             .events-grid {
                 grid-template-columns: 1fr;
-                gap: 20px;
+                gap: 15px;
+            }
+
+            .event-card {
+                padding: 20px;
+            }
+
+            /* Gallery fixes for mobile */
+            .gallery-row {
+                scroll-snap-type: x mandatory;
             }
 
             .gallery-img {
-                width: 200px;
-                height: 130px;
-            }
-
-            .gallery-track {
-                animation-duration: 25s !important;
+                width: 220px;
+                height: 140px;
+                scroll-snap-align: start;
             }
 
             .stats-grid {
                 grid-template-columns: repeat(2, 1fr);
-                gap: 15px;
+                gap: 12px;
             }
 
             .sponsorship-tiers {
-                flex-direction: column;
-                align-items: center;
-                gap: 20px;
+                grid-template-columns: 1fr;
+                gap: 25px;
             }
 
             .tier-card {
-                width: 100%;
-                max-width: 100%;
+                padding: 25px;
+                padding-bottom: 60px;
             }
 
             .contact-container {
                 grid-template-columns: 1fr;
                 gap: 30px;
+            }
+
+            .contact-form {
+                order: -1;
             }
 
             .floating-register {
@@ -1089,8 +1179,23 @@
             }
 
             .floating-register .cta-button {
-                padding: 10px 20px;
+                padding: 8px 16px;
                 font-size: 0.8rem;
+                min-height: 40px;
+            }
+
+            /* Disable problematic animations */
+            .wave-background {
+                height: 30%;
+                opacity: 0.4;
+            }
+
+            .particles {
+                display: none;
+            }
+
+            .hero-title {
+                animation: none;
             }
         }
 
@@ -1126,41 +1231,63 @@
         @keyframes spin {
             to { transform: rotate(360deg); }
         }
+
+        /* --- Reduce Motion --- */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
+        /* --- Print Styles --- */
+        @media print {
+            body {
+                background: white;
+                color: black;
+            }
+            
+            .cursor, .cursor-follower, .wave-background, .particles,
+            .floating-register, .burger-menu, .sidebar, .overlay {
+                display: none !important;
+            }
+        }
     </style>
 </head>
 <body>
     <!-- Page Loader -->
-    <div class="page-loader" id="pageLoader">
+    <div class="page-loader" id="pageLoader" role="status" aria-label="Loading page">
         <div class="loader-spinner"></div>
     </div>
 
     <!-- Background Elements -->
     <div class="wave-background">
         <div class="wave"></div>
-        <div class="wave"></div>
     </div>
-    <div class="particles" id="particles"></div>
+    <div class="particles" id="particles" aria-hidden="true"></div>
     
-    <!-- Cursor Elements -->
-    <div class="cursor"></div>
-    <div class="cursor-follower"></div>
+    <!-- Cursor Elements (Desktop only) -->
+    <div class="cursor" aria-hidden="true"></div>
+    <div class="cursor-follower" aria-hidden="true"></div>
 
     <!-- Overlay -->
     <div class="overlay" id="overlay"></div>
 
     <!-- Floating Register Button -->
     <div class="floating-register" id="floatingRegister">
-        <button class="cta-button" onclick="document.querySelector('.hero .cta-button').click()">
+        <button class="cta-button" onclick="document.querySelector('.hero .cta-button').click()" aria-label="Register for INCEPTA 2026">
             <i class="fas fa-user-plus" style="margin-right: 8px;"></i> Register
         </button>
     </div>
 
     <!-- Header -->
-    <header>
-        <div class="logo">
-            <img src="/assets/logo.png" alt="INCEPTA 2026 Logo">
-        </div>
-        <nav>
+    <header role="banner">
+        <a href="#top" class="logo" aria-label="INCEPTA 2026 Home">
+            <img src="/assets/logo.png" alt="INCEPTA 2026 Logo" loading="lazy">
+            <span>INCEPTA 2026</span>
+        </a>
+        <nav role="navigation" aria-label="Main navigation">
             <ul>
                 <li><a href="#about">About</a></li>
                 <li><a href="#events">Events</a></li>
@@ -1170,7 +1297,7 @@
                 <li><a href="#contact">Contact</a></li>
             </ul>
         </nav>
-        <button class="burger-menu" id="burgerMenu" aria-label="Toggle menu">
+        <button class="burger-menu" id="burgerMenu" aria-label="Toggle menu" aria-expanded="false">
             <span></span>
             <span></span>
             <span></span>
@@ -1178,41 +1305,43 @@
     </header>
 
     <!-- Sidebar -->
-    <div class="sidebar" id="sidebar">
+    <div class="sidebar" id="sidebar" role="navigation" aria-label="Mobile navigation" aria-hidden="true">
         <div class="sidebar-header">
             <div class="sidebar-logo">INCEPTA 2026</div>
             <button class="sidebar-close" id="sidebarClose" aria-label="Close menu">
-                <i class="fas fa-times"></i>
+                <i class="fas fa-times" aria-hidden="true"></i>
             </button>
         </div>
         <nav class="sidebar-nav">
-            <a href="#about" onclick="closeSidebar()"><i class="fas fa-info-circle"></i> About</a>
-            <a href="#events" onclick="closeSidebar()"><i class="fas fa-calendar-alt"></i> Events</a>
-            <a href="#gallery" onclick="closeSidebar()"><i class="fas fa-images"></i> Gallery</a>
-            <a href="#sponsorship" onclick="closeSidebar()"><i class="fas fa-handshake"></i> Sponsors</a>
-            <a href="#stall" onclick="closeSidebar()"><i class="fas fa-store"></i> Stalls</a>
-            <a href="#contact" onclick="closeSidebar()"><i class="fas fa-envelope"></i> Contact</a>
+            <a href="#about" onclick="closeSidebar()"><i class="fas fa-info-circle" aria-hidden="true"></i> About</a>
+            <a href="#events" onclick="closeSidebar()"><i class="fas fa-calendar-alt" aria-hidden="true"></i> Events</a>
+            <a href="#gallery" onclick="closeSidebar()"><i class="fas fa-images" aria-hidden="true"></i> Gallery</a>
+            <a href="#sponsorship" onclick="closeSidebar()"><i class="fas fa-handshake" aria-hidden="true"></i> Sponsors</a>
+            <a href="#stall" onclick="closeSidebar()"><i class="fas fa-store" aria-hidden="true"></i> Stalls</a>
+            <a href="#contact" onclick="closeSidebar()"><i class="fas fa-envelope" aria-hidden="true"></i> Contact</a>
         </nav>
         <div class="sidebar-footer">
             <p>Follow us on social media</p>
             <div class="social-links" style="margin-top: 15px; gap: 10px;">
-                <a href="#" class="social-link" style="width: 35px; height: 35px;"><i class="fab fa-instagram"></i></a>
-                <a href="#" class="social-link" style="width: 35px; height: 35px;"><i class="fab fa-linkedin-in"></i></a>
+                <a href="#" aria-label="Instagram" class="social-link"><i class="fab fa-instagram"></i></a>
+                <a href="#" aria-label="LinkedIn" class="social-link"><i class="fab fa-linkedin-in"></i></a>
             </div>
         </div>
     </div>
 
     <!-- Hero Section -->
-    <section class="hero">
+    <section class="hero" id="top">
         <h1 class="hero-title">INCEPTA 2026</h1>
         <p class="hero-subtitle">A premier technical festival focused on AI Agents & Generative AI at the College of Engineering, Trivandrum.</p>
-        <p class="date"><i class="fas fa-calendar-alt" style="margin-right: 10px;"></i> January 29-30, 2026</p>
-        <button class="cta-button" onclick="alert('Registration will open soon! Contact us for early bird sponsorship.')">Register Now</button>
+        <p class="date"><i class="fas fa-calendar-alt" aria-hidden="true" style="margin-right: 8px;"></i> January 29-30, 2026</p>
+        <button class="cta-button" onclick="alert('Registration will open soon! Contact us for early bird sponsorship.')" aria-label="Register for the event">
+            Register Now
+        </button>
     </section>
 
     <!-- About Section -->
-    <section id="about" class="section">
-        <h2 class="section-title">About The Fest</h2>
+    <section id="about" class="section" aria-labelledby="about-title">
+        <h2 class="section-title" id="about-title">About The Fest</h2>
         <div class="about-content">
             <div class="about-text">
                 <h3><i class="fas fa-university"></i> About CET</h3>
@@ -1230,37 +1359,37 @@
     </section>
 
     <!-- Events Section -->
-    <section id="events" class="section">
-        <h2 class="section-title">Festival Events</h2>
+    <section id="events" class="section" aria-labelledby="events-title">
+        <h2 class="section-title" id="events-title">Festival Events</h2>
         <p class="section-subtitle">Immerse yourself in cutting-edge AI competitions, workshops, and cultural celebrations</p>
         <div class="events-grid">
             <div class="event-card">
-                <div class="event-icon"><i class="fas fa-code"></i></div>
+                <div class="event-icon" aria-hidden="true"><i class="fas fa-code"></i></div>
                 <h3 class="event-title">AI Agent Hackathon</h3>
                 <p class="event-description">12-hour challenge to build autonomous agents that solve real-world problems. Form teams of 4 and compete for prizes worth ₹50,000.</p>
             </div>
             <div class="event-card">
-                <div class="event-icon"><i class="fas fa-laptop-code"></i></div>
+                <div class="event-icon" aria-hidden="true"><i class="fas fa-laptop-code"></i></div>
                 <h3 class="event-title">GenAI Workshops</h3>
                 <p class="event-description">Hands-on training with LLMs, RAG pipelines, and no-code agent frameworks. Learn from industry experts and build working prototypes.</p>
             </div>
             <div class="event-card">
-                <div class="event-icon"><i class="fas fa-microphone"></i></div>
+                <div class="event-icon" aria-hidden="true"><i class="fas fa-microphone"></i></div>
                 <h3 class="event-title">Tech Talks</h3>
                 <p class="event-description">Industry leaders discuss the future of AGI and ethics in AI development. Keynote sessions from Google, Microsoft, and startup founders.</p>
             </div>
             <div class="event-card">
-                <div class="event-icon"><i class="fas fa-flag"></i></div>
+                <div class="event-icon" aria-hidden="true"><i class="fas fa-flag"></i></div>
                 <h3 class="event-title">Capture The Flag</h3>
                 <p class="event-description">Cybersecurity challenges focused on AI vulnerabilities and prompt injection. Test your security skills in our red team challenges.</p>
             </div>
             <div class="event-card">
-                <div class="event-icon"><i class="fas fa-gamepad"></i></div>
+                <div class="event-icon" aria-hidden="true"><i class="fas fa-gamepad"></i></div>
                 <h3 class="event-title">E-Sports Hub</h3>
                 <p class="event-description">Competitive gaming tournaments featuring Valorant, FIFA, and more. Win prizes and glory in our gaming arena.</p>
             </div>
             <div class="event-card">
-                <div class="event-icon"><i class="fas fa-crown"></i></div>
+                <div class="event-icon" aria-hidden="true"><i class="fas fa-crown"></i></div>
                 <h3 class="event-title">INCEPTA GALA</h3>
                 <p class="event-description">Our flagship cultural night with music, dance, and celebrity performances. End the fest with an unforgettable evening.</p>
             </div>
@@ -1268,18 +1397,18 @@
     </section>
 
     <!-- Gallery Section -->
-    <section id="gallery" class="gallery-section">
-        <h2 class="section-title">Gallery</h2>
+    <section id="gallery" class="gallery-section" aria-labelledby="gallery-title">
+        <h2 class="section-title" id="gallery-title">Gallery</h2>
         <p class="section-subtitle">Glimpses from previous editions of INCEPTA</p>
         <div class="gallery-wrapper">
             <div class="gallery-container">
-                <div class="gallery-row row-1">
+                <div class="gallery-row row-1" aria-label="Gallery row 1">
                     <div class="gallery-track" id="track1"></div>
                 </div>
-                <div class="gallery-row row-2">
+                <div class="gallery-row row-2" aria-label="Gallery row 2">
                     <div class="gallery-track" id="track2"></div>
                 </div>
-                <div class="gallery-row row-3">
+                <div class="gallery-row row-3" aria-label="Gallery row 3">
                     <div class="gallery-track" id="track3"></div>
                 </div>
             </div>
@@ -1287,8 +1416,8 @@
     </section>
 
     <!-- Stats Section -->
-    <section id="stats" class="section">
-        <h2 class="section-title">Our Reach</h2>
+    <section id="stats" class="section" aria-labelledby="stats-title">
+        <h2 class="section-title" id="stats-title">Our Reach</h2>
         <p class="section-subtitle">Connecting thousands of students across Kerala</p>
         <div class="stats-grid">
             <div class="stat-card">
@@ -1311,124 +1440,134 @@
     </section>
 
     <!-- Sponsorship Section -->
-    <section id="sponsorship" class="section">
-        <h2 class="section-title">Sponsorship Plans</h2>
+    <section id="sponsorship" class="section" aria-labelledby="sponsorship-title">
+        <h2 class="section-title" id="sponsorship-title">Sponsorship Plans</h2>
         <p class="section-subtitle">Partner with Kerala's premier AI-focused tech fest and reach thousands of tech enthusiasts</p>
         <div class="sponsorship-tiers">
             <div class="tier-card platinum">
                 <h3 class="tier-header">Platinum</h3>
                 <p class="tier-price">₹75,000</p>
                 <ul class="tier-benefits">
-                    <li><i class="fas fa-check"></i> Title Sponsor Status</li>
-                    <li><i class="fas fa-check"></i> Dominant Branding</li>
-                    <li><i class="fas fa-check"></i> Keynote Session Slot</li>
-                    <li><i class="fas fa-check"></i> Premium Stall (20x20)</li>
-                    <li><i class="fas fa-check"></i> Recruitment Access</li>
+                    <li><i class="fas fa-check" aria-hidden="true"></i> Title Sponsor Status</li>
+                    <li><i class="fas fa-check" aria-hidden="true"></i> Dominant Branding</li>
+                    <li><i class="fas fa-check" aria-hidden="true"></i> Keynote Session Slot</li>
+                    <li><i class="fas fa-check" aria-hidden="true"></i> Premium Stall (20x20)</li>
+                    <li><i class="fas fa-check" aria-hidden="true"></i> Recruitment Access</li>
                 </ul>
-                <button class="btn-tier" onclick="openContactForm('Platinum Sponsor')">Become Sponsor</button>
+                <button class="btn-tier" onclick="openContactForm('Platinum Sponsor')" aria-label="Apply for Platinum sponsorship">
+                    Become Sponsor
+                </button>
             </div>
             <div class="tier-card gold">
                 <h3 class="tier-header">Gold</h3>
                 <p class="tier-price">₹25,000</p>
                 <ul class="tier-benefits">
-                    <li><i class="fas fa-check"></i> Co-Sponsor Status</li>
-                    <li><i class="fas fa-check"></i> Prime Logo Placement</li>
-                    <li><i class="fas fa-check"></i> Social Media Shoutouts</li>
-                    <li><i class="fas fa-check"></i> Standard Stall (10x10)</li>
+                    <li><i class="fas fa-check" aria-hidden="true"></i> Co-Sponsor Status</li>
+                    <li><i class="fas fa-check" aria-hidden="true"></i> Prime Logo Placement</li>
+                    <li><i class="fas fa-check" aria-hidden="true"></i> Social Media Shoutouts</li>
+                    <li><i class="fas fa-check" aria-hidden="true"></i> Standard Stall (10x10)</li>
                 </ul>
-                <button class="btn-tier" onclick="openContactForm('Gold Sponsor')">Become Sponsor</button>
+                <button class="btn-tier" onclick="openContactForm('Gold Sponsor')" aria-label="Apply for Gold sponsorship">
+                    Become Sponsor
+                </button>
             </div>
             <div class="tier-card silver">
                 <h3 class="tier-header">Silver</h3>
                 <p class="tier-price">₹15,000</p>
                 <ul class="tier-benefits">
-                    <li><i class="fas fa-check"></i> Event Partner</li>
-                    <li><i class="fas fa-check"></i> Logo on Website</li>
-                    <li><i class="fas fa-check"></i> On-Stage Mention</li>
+                    <li><i class="fas fa-check" aria-hidden="true"></i> Event Partner</li>
+                    <li><i class="fas fa-check" aria-hidden="true"></i> Logo on Website</li>
+                    <li><i class="fas fa-check" aria-hidden="true"></i> On-Stage Mention</li>
                 </ul>
-                <button class="btn-tier" onclick="openContactForm('Silver Sponsor')">Become Sponsor</button>
+                <button class="btn-tier" onclick="openContactForm('Silver Sponsor')" aria-label="Apply for Silver sponsorship">
+                    Become Sponsor
+                </button>
             </div>
         </div>
     </section>
 
     <!-- Stall Section -->
-    <section id="stall" class="section">
-        <h2 class="section-title">Stall Tariffs</h2>
+    <section id="stall" class="section" aria-labelledby="stall-title">
+        <h2 class="section-title" id="stall-title">Stall Tariffs</h2>
         <p class="section-subtitle">Showcase your products and services to thousands of tech-savvy students</p>
         <div class="stats-grid">
             <div class="stat-card">
-                <i class="fas fa-umbrella" style="font-size: 2rem; color: var(--accent-pink); margin-bottom: 15px; display: block;"></i>
-                <h3 style="margin-bottom: 10px; font-size: 1.1rem;">Patio Umbrella</h3>
-                <p style="font-size: 1.3rem; font-weight: bold; color: white;">₹5,000 <span style="font-size: 0.8rem; color: #ccc;">/day</span></p>
-                <p style="margin-top: 8px; color: rgba(255,255,255,0.6); font-size: 0.8rem;">Outdoor branding</p>
+                <i class="fas fa-umbrella" style="font-size: 1.5rem; color: var(--accent-pink); margin-bottom: 10px; display: block;" aria-hidden="true"></i>
+                <h3 style="margin-bottom: 8px; font-size: 1.1rem;">Patio Umbrella</h3>
+                <p style="font-size: 1.2rem; font-weight: bold; color: white;">₹5,000 <span style="font-size: 0.8rem; color: #ccc;">/day</span></p>
+                <p style="margin-top: 5px; color: rgba(255,255,255,0.6); font-size: 0.8rem;">Outdoor branding</p>
             </div>
             <div class="stat-card">
-                <i class="fas fa-store" style="font-size: 2rem; color: var(--accent-pink); margin-bottom: 15px; display: block;"></i>
-                <h3 style="margin-bottom: 10px; font-size: 1.1rem;">10x10 Stall</h3>
-                <p style="font-size: 1.3rem; font-weight: bold; color: white;">₹7,500 <span style="font-size: 0.8rem; color: #ccc;">/day</span></p>
-                <p style="margin-top: 8px; color: rgba(255,255,255,0.6); font-size: 0.8rem;">Exhibition space</p>
+                <i class="fas fa-store" style="font-size: 1.5rem; color: var(--accent-pink); margin-bottom: 10px; display: block;" aria-hidden="true"></i>
+                <h3 style="margin-bottom: 8px; font-size: 1.1rem;">10x10 Stall</h3>
+                <p style="font-size: 1.2rem; font-weight: bold; color: white;">₹7,500 <span style="font-size: 0.8rem; color: #ccc;">/day</span></p>
+                <p style="margin-top: 5px; color: rgba(255,255,255,0.6); font-size: 0.8rem;">Exhibition space</p>
             </div>
             <div class="stat-card">
-                <i class="fas fa-warehouse" style="font-size: 2rem; color: var(--accent-pink); margin-bottom: 15px; display: block;"></i>
-                <h3 style="margin-bottom: 10px; font-size: 1.1rem;">20x20 Stall</h3>
-                <p style="font-size: 1.3rem; font-weight: bold; color: white;">₹10,000 <span style="font-size: 0.8rem; color: #ccc;">/day</span></p>
-                <p style="margin-top: 8px; color: rgba(255,255,255,0.6); font-size: 0.8rem;">Premium space</p>
+                <i class="fas fa-warehouse" style="font-size: 1.5rem; color: var(--accent-pink); margin-bottom: 10px; display: block;" aria-hidden="true"></i>
+                <h3 style="margin-bottom: 8px; font-size: 1.1rem;">20x20 Stall</h3>
+                <p style="font-size: 1.2rem; font-weight: bold; color: white;">₹10,000 <span style="font-size: 0.8rem; color: #ccc;">/day</span></p>
+                <p style="margin-top: 5px; color: rgba(255,255,255,0.6); font-size: 0.8rem;">Premium space</p>
             </div>
         </div>
     </section>
 
     <!-- Contact Section -->
-    <section id="contact" class="section">
-        <h2 class="section-title">Get in Touch</h2>
+    <section id="contact" class="section" aria-labelledby="contact-title">
+        <h2 class="section-title" id="contact-title">Get in Touch</h2>
         <p class="section-subtitle">Have questions? We're here to help with registration, sponsorship, or event details</p>
         <div class="contact-container">
             <div class="contact-info">
                 <h3>Contact Details</h3>
-                <div class="contact-item">
-                    <i class="fas fa-map-marker-alt"></i>
+                <a href="https://maps.google.com/?q=College+of+Engineering+Trivandrum" target="_blank" class="contact-item" aria-label="View location on map">
+                    <i class="fas fa-map-marker-alt" aria-hidden="true"></i>
                     <div>
                         <strong>College of Engineering, Trivandrum</strong><br>
                         <span style="color: rgba(255,255,255,0.6);">Kerala, India - 695016</span>
                     </div>
-                </div>
-                <div class="contact-item">
-                    <i class="fas fa-envelope"></i>
+                </a>
+                <a href="mailto:ascacet@gmail.com" class="contact-item" aria-label="Send email to ASCA">
+                    <i class="fas fa-envelope" aria-hidden="true"></i>
                     <div>
                         <strong>Email</strong><br>
-                        <a href="mailto:ascacet@gmail.com" style="color: var(--accent-pink);">ascacet@gmail.com</a>
+                        <span style="color: var(--accent-pink);">ascacet@gmail.com</span>
                     </div>
-                </div>
-                <div class="contact-item">
-                    <i class="fas fa-phone"></i>
+                </a>
+                <a href="tel:+917356160270" class="contact-item" aria-label="Call Aiswarya">
+                    <i class="fas fa-phone" aria-hidden="true"></i>
                     <div>
                         <strong>Event Coordinators</strong><br>
                         <span style="color: rgba(255,255,255,0.7);">Aiswarya: +91 73561 60270</span>
                     </div>
-                </div>
-                <div class="contact-item">
-                    <i class="fab fa-instagram"></i>
+                </a>
+                <a href="https://instagram.com/incepta.cet" target="_blank" class="contact-item" aria-label="Follow on Instagram">
+                    <i class="fab fa-instagram" aria-hidden="true"></i>
                     <div>
                         <strong>Follow Us</strong><br>
-                        <a href="https://instagram.com/incepta.cet" target="_blank" style="color: var(--accent-pink);">@incepta.cet</a>
+                        <span style="color: var(--accent-pink);">@incepta.cet</span>
                     </div>
-                </div>
+                </a>
             </div>
             <div class="contact-form">
-                <form id="contactForm">
+                <form id="contactForm" novalidate>
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Your Full Name" required>
+                        <label for="name" class="sr-only">Full Name</label>
+                        <input type="text" id="name" class="form-control" placeholder="Your Full Name" required aria-required="true">
                     </div>
                     <div class="form-group">
-                        <input type="email" class="form-control" placeholder="Your Email Address" required>
+                        <label for="email" class="sr-only">Email Address</label>
+                        <input type="email" id="email" class="form-control" placeholder="Your Email Address" required aria-required="true">
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Subject (e.g., Sponsorship Query)" required>
+                        <label for="subject" class="sr-only">Subject</label>
+                        <input type="text" id="subject" class="form-control" placeholder="Subject (e.g., Sponsorship Query)" required aria-required="true">
                     </div>
                     <div class="form-group">
-                        <textarea class="form-control" placeholder="Your Message or Requirements" required></textarea>
+                        <label for="message" class="sr-only">Message</label>
+                        <textarea id="message" class="form-control" placeholder="Your Message or Requirements" required aria-required="true"></textarea>
                     </div>
-                    <button type="submit" class="cta-button" style="width: 100%; border-radius: 10px;">
-                        <i class="fas fa-paper-plane" style="margin-right: 8px;"></i> Send Message
+                    <button type="submit" class="cta-button" style="width: 100%; border-radius: 10px;" aria-label="Send message">
+                        <i class="fas fa-paper-plane" aria-hidden="true" style="margin-right: 8px;"></i> Send Message
                     </button>
                 </form>
             </div>
@@ -1436,16 +1575,16 @@
     </section>
 
     <!-- Footer -->
-    <footer>
+    <footer role="contentinfo">
         <div class="social-links">
-            <a href="#" class="social-link" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-            <a href="#" class="social-link" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-            <a href="#" class="social-link" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
-            <a href="#" class="social-link" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
-            <a href="#" class="social-link" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+            <a href="#" class="social-link" aria-label="Instagram"><i class="fab fa-instagram" aria-hidden="true"></i></a>
+            <a href="#" class="social-link" aria-label="LinkedIn"><i class="fab fa-linkedin-in" aria-hidden="true"></i></a>
+            <a href="#" class="social-link" aria-label="Facebook"><i class="fab fa-facebook-f" aria-hidden="true"></i></a>
+            <a href="#" class="social-link" aria-label="Twitter"><i class="fab fa-twitter" aria-hidden="true"></i></a>
+            <a href="#" class="social-link" aria-label="YouTube"><i class="fab fa-youtube" aria-hidden="true"></i></a>
         </div>
         <p>&copy; 2026 INCEPTA. Organized by ASCA, College of Engineering Trivandrum.</p>
-        <p style="margin-top: 10px; font-size: 0.75rem;">Designed with <i class="fas fa-heart" style="color: var(--accent-pink);"></i> by ASCA Tech Team</p>
+        <p style="margin-top: 10px; font-size: 0.75rem;">Designed with <i class="fas fa-heart" style="color: var(--accent-pink);" aria-hidden="true"></i> by ASCA Tech Team</p>
     </footer>
 
     <script>
@@ -1456,59 +1595,61 @@
             }, 500);
         });
 
-        // --- Particle Effect ---
-        const particlesContainer = document.getElementById('particles');
-        for (let i = 0; i < 25; i++) {
-            const particle = document.createElement('div');
-            particle.classList.add('particle');
-            const size = Math.random() * 25 + 8;
-            particle.style.width = size + 'px';
-            particle.style.height = size + 'px';
-            particle.style.left = Math.random() * 100 + '%';
-            particle.style.top = Math.random() * 100 + '%';
-            particle.style.animationDuration = Math.random() * 10 + 10 + 's';
-            particle.style.animationDelay = Math.random() * 5 + 's';
-            particlesContainer.appendChild(particle);
+        // --- Particle Effect (Desktop only) ---
+        if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+            const particlesContainer = document.getElementById('particles');
+            for (let i = 0; i < 20; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+                const size = Math.random() * 20 + 8;
+                particle.style.width = size + 'px';
+                particle.style.height = size + 'px';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.top = Math.random() * 100 + '%';
+                particle.style.animationDuration = Math.random() * 15 + 15 + 's';
+                particle.style.animationDelay = Math.random() * 5 + 's';
+                particlesContainer.appendChild(particle);
+            }
         }
 
-        // --- Custom Cursor ---
-        const cursor = document.querySelector('.cursor');
-        const follower = document.querySelector('.cursor-follower');
-        let mouseX = 0, mouseY = 0;
-        let followerX = 0, followerY = 0;
+        // --- Custom Cursor (Desktop only) ---
+        if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+            const cursor = document.querySelector('.cursor');
+            const follower = document.querySelector('.cursor-follower');
+            let mouseX = 0, mouseY = 0;
+            let followerX = 0, followerY = 0;
 
-        document.addEventListener('mousemove', (e) => {
-            mouseX = e.clientX;
-            mouseY = e.clientY;
-            cursor.style.left = mouseX + 'px';
-            cursor.style.top = mouseY + 'px';
-        });
+            document.addEventListener('mousemove', (e) => {
+                mouseX = e.clientX;
+                mouseY = e.clientY;
+                cursor.style.left = mouseX + 'px';
+                cursor.style.top = mouseY + 'px';
+            });
 
-        function animateFollower() {
-            const dx = mouseX - followerX;
-            const dy = mouseY - followerY;
-            followerX += dx * 0.15;
-            followerY += dy * 0.15;
-            follower.style.left = followerX + 'px';
-            follower.style.top = followerY + 'px';
-            requestAnimationFrame(animateFollower);
+            function animateFollower() {
+                const dx = mouseX - followerX;
+                const dy = mouseY - followerY;
+                followerX += dx * 0.15;
+                followerY += dy * 0.15;
+                follower.style.left = followerX + 'px';
+                follower.style.top = followerY + 'px';
+                requestAnimationFrame(animateFollower);
+            }
+            animateFollower();
+
+            // Interactive elements
+            const interactiveElements = 'a, button, .event-card, .tier-card, .social-link, .gallery-img, .stat-card';
+            document.querySelectorAll(interactiveElements).forEach(el => {
+                el.addEventListener('mouseenter', () => {
+                    cursor.classList.add('cursor-hover');
+                    follower.classList.add('cursor-follower-hover');
+                });
+                el.addEventListener('mouseleave', () => {
+                    cursor.classList.remove('cursor-hover');
+                    follower.classList.remove('cursor-follower-hover');
+                });
+            });
         }
-        animateFollower();
-
-        // Interactive elements
-        const interactiveElements = 'a, button, .event-card, .tier-card, .social-link, .gallery-img, .stat-card';
-        document.querySelectorAll(interactiveElements).forEach(el => {
-            el.addEventListener('mouseenter', () => {
-                follower.style.transform = 'translate(-50%, -50%) scale(1.8)';
-                follower.style.borderColor = 'var(--accent-pink)';
-                cursor.style.transform = 'translate(-50%, -50%) scale(1.5)';
-            });
-            el.addEventListener('mouseleave', () => {
-                follower.style.transform = 'translate(-50%, -50%) scale(1)';
-                follower.style.borderColor = 'var(--misty-lavender-glow)';
-                cursor.style.transform = 'translate(-50%, -50%) scale(1)';
-            });
-        });
 
         // --- Gallery Logic ---
         const images = [
@@ -1523,12 +1664,15 @@
         function populateTrack(trackId) {
             const track = document.getElementById(trackId);
             const loopImages = [...images, ...images, ...images];
-            loopImages.forEach(url => {
+            loopImages.forEach((url, index) => {
                 const img = document.createElement('img');
                 img.src = url;
                 img.classList.add('gallery-img');
                 img.loading = "lazy";
-                img.alt = "INCEPTA Gallery Image";
+                img.alt = `INCEPTA Gallery Image ${index + 1}`;
+                img.addEventListener('click', () => {
+                    window.open(url, '_blank', 'noopener,noreferrer');
+                });
                 track.appendChild(img);
             });
         }
@@ -1543,7 +1687,8 @@
                     entry.target.classList.add('visible');
                 }
             });
-        }, { threshold: 0.1 });
+        }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
         document.querySelectorAll('.section').forEach(section => {
             observer.observe(section);
         });
@@ -1558,6 +1703,8 @@
                         behavior: 'smooth',
                         block: 'start'
                     });
+                    // Update URL hash
+                    history.pushState(null, null, this.getAttribute('href'));
                 }
             });
         });
@@ -1565,7 +1712,7 @@
         // --- Floating Button Visibility ---
         const floatingBtn = document.getElementById('floatingRegister');
         window.addEventListener('scroll', () => {
-            if (window.scrollY > 300) {
+            if (window.scrollY > 400 && window.innerWidth <= 768) {
                 floatingBtn.classList.add('visible');
             } else {
                 floatingBtn.classList.remove('visible');
@@ -1590,7 +1737,7 @@
         function openContactForm(subject) {
             document.getElementById('contact').scrollIntoView({ behavior: 'smooth' });
             setTimeout(() => {
-                const subjectField = document.querySelector('#contactForm input[placeholder*="Subject"]');
+                const subjectField = document.getElementById('subject');
                 if (subjectField) subjectField.value = subject;
                 closeSidebar();
             }, 500);
@@ -1601,7 +1748,7 @@
         window.addEventListener('scroll', () => {
             const currentScroll = window.pageYOffset;
             const header = document.querySelector('header');
-            if (currentScroll > lastScroll && currentScroll > 100) {
+            if (currentScroll > lastScroll && currentScroll > 100 && window.innerWidth > 768) {
                 header.style.transform = 'translateY(-100%)';
             } else {
                 header.style.transform = 'translateY(0)';
@@ -1617,16 +1764,20 @@
 
         function openSidebar() {
             sidebar.classList.add('active');
+            sidebar.setAttribute('aria-hidden', 'false');
             overlay.classList.add('active');
             document.body.classList.add('sidebar-open');
             burgerMenu.classList.add('active');
+            burgerMenu.setAttribute('aria-expanded', 'true');
         }
 
         function closeSidebar() {
             sidebar.classList.remove('active');
+            sidebar.setAttribute('aria-hidden', 'true');
             overlay.classList.remove('active');
             document.body.classList.remove('sidebar-open');
             burgerMenu.classList.remove('active');
+            burgerMenu.setAttribute('aria-expanded', 'false');
         }
 
         burgerMenu.addEventListener('click', openSidebar);
@@ -1640,12 +1791,39 @@
             }
         });
 
-        // --- Close sidebar on window resize if above mobile breakpoint ---
+        // --- Close sidebar on window resize if switching to desktop ---
         window.addEventListener('resize', () => {
             if (window.innerWidth > 768 && sidebar.classList.contains('active')) {
                 closeSidebar();
             }
         });
+
+        // --- Touch gesture for mobile gallery ---
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        document.querySelectorAll('.gallery-row').forEach(row => {
+            row.addEventListener('touchstart', (e) => {
+                touchStartX = e.changedTouches[0].screenX;
+            });
+
+            row.addEventListener('touchend', (e) => {
+                touchEndX = e.changedTouches[0].screenX;
+                handleSwipe();
+            });
+        });
+
+        function handleSwipe() {
+            const swipeDistance = touchEndX - touchStartX;
+            if (Math.abs(swipeDistance) > 50) {
+                // Optional: Add swipe feedback
+            }
+        }
+
+        // --- Prevent body scroll when sidebar is open ---
+        sidebar.addEventListener('touchmove', (e) => {
+            e.stopPropagation();
+        }, { passive: false });
     </script>
 </body>
 </html>
