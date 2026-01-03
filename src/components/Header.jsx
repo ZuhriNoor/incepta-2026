@@ -42,7 +42,7 @@ export default function Header() {
         <>
             <header className={scrolled ? 'scrolled' : ''}>
                 <Link to="/" className="logo">
-                    <img src="/logo.png" alt="INCEPTA 2026" style={{ height: '40px', width: 'auto', verticalAlign: 'middle' }} />
+                    <img src={`${import.meta.env.BASE_URL}logo.png`} alt="INCEPTA 2026" style={{ height: '40px', width: 'auto', verticalAlign: 'middle' }} />
                 </Link>
                 <nav>
                     <ul>
@@ -76,7 +76,7 @@ export default function Header() {
             >
                 <div className="sidebar-header">
                     <div className="sidebar-logo">
-                        <img src="/logo.png" alt="INCEPTA 2026" style={{ height: '40px', width: 'auto' }} />
+                        <img src={`${import.meta.env.BASE_URL}logo.png`} alt="INCEPTA 2026" style={{ height: '40px', width: 'auto' }} />
                     </div>
                     <button className="sidebar-close" onClick={() => setSidebarOpen(false)} aria-label="Close menu">
                         <X size={24} />
