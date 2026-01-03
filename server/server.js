@@ -315,7 +315,7 @@ app.get('/api/registrations/:eventId/:orderId', async (req, res) => {
 });
 
 // Start server
-app.listen(PORT, '0.0.0.0', () => {
+app.listen(PORT, () => {
   console.log(`🚀 Server running on http://localhost:${PORT}`);
   console.log(`📧 Email configured: ${process.env.EMAIL_USER ? 'Yes' : 'No'}`);
   console.log(`💳 Razorpay configured: ${process.env.RAZORPAY_KEY_ID ? 'Yes' : 'No'}`);
