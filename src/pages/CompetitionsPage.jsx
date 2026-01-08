@@ -16,6 +16,7 @@ const iconMap = {
 export default function CompetitionsPage() {
     const [selectedEvent, setSelectedEvent] = useState(null);
     const category = eventCategories.competitions;
+    console.log(category, "Comp")
     const categoryEvents = category.events.map(id => ({ id, ...eventsData[id] }));
 
     return (

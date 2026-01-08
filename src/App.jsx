@@ -8,10 +8,12 @@ import HomePage from './pages/HomePage';
 import CompetitionsPage from './pages/CompetitionsPage';
 import EventsPage from './pages/EventsPage';
 import GalaPage from './pages/GalaPage';
+import ScrollToTop from './components/ScrollToTop';
 
 function App() {
   return (
     <Router>
+      <ScrollToTop />
       <Preloader />
       <BackgroundOrbs />
       <ParticleBackground />
