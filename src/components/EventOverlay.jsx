@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
+import { REGISTRATION_LINKS } from '../eventsData';
 
 export default function EventOverlay({ eventId, event, onClose }) {
     useEffect(() => {

@@ -9,6 +9,8 @@ import CompetitionsPage from './pages/CompetitionsPage';
 import EventsPage from './pages/EventsPage';
 import GalaPage from './pages/GalaPage';
 import ScrollToTop from './components/ScrollToTop';
+import RegisterPage from './pages/RegisterPage';
+import RegisterSuccessPage from './pages/RegisterSuccessPage';
 
 function App() {
   return (
