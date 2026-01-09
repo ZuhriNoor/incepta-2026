@@ -34,7 +34,7 @@ export default function Hero() {
     };
 
     return (
-        <section className="hero">
+        <section id="hero" className="hero">
             <div className="hero-badge">
                 <Sun size={18} />
                 January 29-30, 2026

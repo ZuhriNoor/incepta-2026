@@ -127,15 +127,13 @@ header {
   top: 0;
   width: 100%;
   z-index: 1000;
-  backdrop-filter: blur(20px) saturate(180%);
-  background: rgba(10, 5, 20, 0.75);
-  border-bottom: 1px solid var(--glass-border);
+  background: transparent;
   transition: all 0.3s ease;
 }
 
 header.scrolled {
   padding: 12px 5%;
-  background: rgba(10, 5, 20, 0.9);
+  background: transparent;
 }
 
 .logo {
