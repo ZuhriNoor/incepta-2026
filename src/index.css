@@ -1079,7 +1079,7 @@ footer {
   opacity: 0;
   visibility: hidden;
   transition: opacity 0.4s ease, visibility 0.4s ease;
-  overflow-y: auto;
+  overflow: hidden;
 }
 
 .event-overlay.active {
@@ -1087,9 +1087,20 @@ footer {
   visibility: visible;
 }
 
+.overlay-scroll-container {
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  position: absolute;
+  top: 0;
+  left: 0;
+  -webkit-overflow-scrolling: touch;
+}
+
 .event-overlay-content {
   min-height: 100vh;
-  padding: 80px 5% 60px;
+  padding: 80px 5% 120px;
   transform: translateY(50px);
   opacity: 0;
   transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease;
@@ -1253,16 +1264,28 @@ footer {
 }
 
 .overlay-actions {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: rgba(10, 5, 20, 0.95);
+  padding: 20px;
+  z-index: 10002;
+  backdrop-filter: blur(10px);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
   display: flex;
-  gap: 20px;
-  flex-wrap: wrap;
+  justify-content: center;
+  box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.5);
 }
 
 .overlay-register-btn {
   background: linear-gradient(135deg, var(--neon-purple) 0%, var(--neon-magenta) 100%);
   color: white;
   border: none;
-  padding: 18px 50px;
+  width: 100%;
+  max-width: 600px;
+  /* Max width for desktop */
+  padding: 18px 30px;
   font-size: 1.1rem;
   font-weight: 600;
   border-radius: 60px;
@@ -1273,6 +1296,7 @@ footer {
   text-decoration: none;
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 10px;
 }
 
@@ -1380,35 +1404,47 @@ body.sidebar-open {
   }
 
   .countdown {
-    gap: 10px;
+    gap: 8px;
   }
 
   .countdown-item {
-    min-width: 80px;
-    padding: 15px;
+    min-width: 65px;
+    padding: 10px;
+    border-radius: 12px;
   }
 
-  .countdown-number {
-    font-size: 2.2rem;
+  .hero {
+    padding: 80px 20px 40px;
+    /* Reduced top/bottom padding */
+    min-height: auto;
+    /* Allow height to adjust to content */
+  }
+
+  .hero-badge {
+    margin-bottom: 20px;
+    padding: 8px 16px;
+    font-size: 0.8rem;
   }
 
   .hero-title {
+    font-size: clamp(2.5rem, 10vw, 4rem);
+    /* Reduced font size */
+    margin-bottom: 15px;
     letter-spacing: -1px;
+    line-height: 1.1;
   }
 
-  .events-grid,
-  .about-grid {
-    grid-template-columns: 1fr;
+  .hero-subtitle {
+    font-size: 1rem;
+    margin-bottom: 30px;
+    line-height: 1.5;
   }
 
-  .event-card,
-  .about-card {
-    padding: 28px;
+  .countdown {
+    gap: 8px;
+    margin-bottom: 30px;
   }
 
-  .section {
-    padding: 80px 5%;
-  }
 
   .contact-form {
     padding: 25px;
@@ -1421,18 +1457,7 @@ body.sidebar-open {
     height: 45px;
   }
 
-  .event-overlay-content {
-    padding: 70px 5% 40px;
-  }
 
-  .overlay-actions {
-    flex-direction: column;
-  }
-
-  .overlay-register-btn {
-    width: 100%;
-    justify-content: center;
-  }
 
   .gallery-track {
     animation: scrollLeftMobile 50s linear infinite;
@@ -1462,15 +1487,29 @@ body.sidebar-open {
     }
   }
 
+  .gallery-container {
+    transform: rotate(0deg);
+    width: 100%;
+    margin-left: 0;
+    gap: 15px;
+  }
+
   .gallery-row {
-    padding-bottom: 10px;
+    padding-bottom: 20px;
+  }
+
+  .gallery-track {
+    animation: scrollLeftMobile 40s linear infinite;
+    gap: 12px;
   }
 
   .gallery-img {
-    width: 250px;
-    height: 150px;
-    min-width: 250px;
-    flex: 0 0 250px;
+    width: 160px;
+    height: 100px;
+    min-width: 160px;
+    flex: 0 0 160px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
   }
 }
 
@@ -1984,8 +2023,13 @@ body.sidebar-open {
 }
 
 @keyframes spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .register-info {
@@ -2067,6 +2111,7 @@ body.sidebar-open {
     transform: scale(0);
     opacity: 0;
   }
+
   to {
     transform: scale(1);
     opacity: 1;
