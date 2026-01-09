@@ -18,7 +18,6 @@
   box-sizing: border-box;
 }
 
-/* Custom Scrollbar */
 ::-webkit-scrollbar {
   width: 8px;
 }
@@ -117,7 +116,6 @@ body {
   }
 }
 
-/* Header */
 header {
   padding: 18px 5%;
   display: flex;
@@ -1423,6 +1421,35 @@ body.sidebar-open {
     grid-template-columns: 1fr;
   }
 
+  /* Horizontal Scroll for About Section */
+  .about-grid {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    gap: 20px;
+    padding-bottom: 30px;
+    /* Space for potential scrollbar/swipe feel */
+    scrollbar-width: none;
+    /* Hide scrollbar for cleaner look */
+    margin: 0 -5%;
+    /* Negative margin to allow full-width swipe */
+    padding-left: 5%;
+    /* Restore padding for first item */
+    padding-right: 5%;
+    /* Restore padding for last item */
+  }
+
+  .about-grid::-webkit-scrollbar {
+    display: none;
+  }
+
+  .about-card {
+    min-width: 85%;
+    /* Show most of the card */
+    scroll-snap-align: center;
+    margin-right: 0;
+  }
+
   .countdown {
     gap: 6px;
     /* Tighter gap */
@@ -1451,17 +1478,16 @@ body.sidebar-open {
 
   .countdown-label {
     font-size: 0.55rem;
-    /* Smaller label */
     margin-top: 2px;
     letter-spacing: 0.5px;
   }
 
-  /* Allow height to adjust to content */
   .hero {
     padding: 80px 5% 40px;
-    /* Reduced top/bottom padding */
-    min-height: auto;
-    /* Allow height to adjust to content */
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
   }
 
   .hero-badge {
@@ -1919,9 +1945,14 @@ body.sidebar-open {
   }
 
   /* Mobile Optimizations */
+  /* Mobile Optimizations */
   .section {
     padding: 60px 5%;
-    min-height: auto;
+    min-height: 100dvh;
+    /* Force full height per section */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
   }
 
   .hero {
