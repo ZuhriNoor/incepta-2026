@@ -8,20 +8,31 @@ export default function ParticleBackground() {
     useEffect(() => {
         if (!containerRef.current) return;
 
+        // Optimization: Check device capabilities
+        const isMobile = window.innerWidth < 768;
+        // Cap pixel ratio to 2 to prevent overheating on high-res phones
+        const pixelRatio = Math.min(window.devicePixelRatio, 2);
+
         // Three.js Scene Setup
         const scene = new THREE.Scene();
         const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-        const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+        // Disable antialias on mobile for performance
+        const renderer = new THREE.WebGLRenderer({
+            antialias: !isMobile,
+            alpha: true,
+            powerPreference: "high-performance"
+        });
 
         renderer.setSize(window.innerWidth, window.innerHeight);
-        renderer.setPixelRatio(window.devicePixelRatio);
+        renderer.setPixelRatio(pixelRatio);
         containerRef.current.appendChild(renderer.domElement);
 
         camera.position.z = 5;
 
         // Create animated particles
         const particlesGeometry = new THREE.BufferGeometry();
-        const particlesCount = 800;
+        // Reduce particle count significantly on mobile (800 -> 350)
+        const particlesCount = isMobile ? 350 : 800;
         const posArray = new Float32Array(particlesCount * 3);
 
         for (let i = 0; i < particlesCount * 3; i++) {
@@ -31,7 +42,7 @@ export default function ParticleBackground() {
         particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
 
         const particlesMaterial = new THREE.PointsMaterial({
-            size: 0.03,
+            size: isMobile ? 0.05 : 0.03, // Slightly larger on mobile to compensate for lower count
             color: 0xAF84CB,
             transparent: true,
             opacity: 0.8,
@@ -62,6 +73,8 @@ export default function ParticleBackground() {
         let smoothedMouseY = 0;
 
         const handleMouseMove = (e) => {
+            // Disable mouse interaction on mobile for perf
+            if (isMobile) return;
             mouseX = (e.clientX / window.innerWidth) * 2 - 1;
             mouseY = -(e.clientY / window.innerHeight) * 2 + 1;
         };
@@ -74,15 +87,22 @@ export default function ParticleBackground() {
             scrollY = window.scrollY;
         };
 
-        window.addEventListener('scroll', handleScroll);
+        // Use passive listener for better scroll performance
+        window.addEventListener('scroll', handleScroll, { passive: true });
 
         // Animation loop
+        const clock = new THREE.Clock();
+
         function animate() {
             animationRef.current = requestAnimationFrame(animate);
+            const elapsedTime = clock.getElapsedTime();
 
-            // Rotate particles
-            particlesMesh.rotation.y += 0.001;
-            particlesMesh.rotation.x += 0.0005;
+            // Rotate particles - smoother and more consistent
+            particlesMesh.rotation.y = elapsedTime * 0.05;
+            particlesMesh.rotation.x = elapsedTime * 0.02;
+
+            // Gentle "breathing" or vertical flow
+            particlesMesh.position.y = Math.sin(elapsedTime * 0.3) * 0.2;
 
             // Smooth mouse interaction
             const targetX = mouseX * 0.5;
@@ -92,9 +112,7 @@ export default function ParticleBackground() {
             smoothedMouseY += (targetY - smoothedMouseY) * 0.05;
 
             // Apply positions
-            // X is controlled by mouse
             camera.position.x = smoothedMouseX;
-            // Y is controlled by scroll + mouse
             camera.position.y = smoothedMouseY + (scrollY * 0.001);
 
             renderer.render(scene, camera);
@@ -106,6 +124,8 @@ export default function ParticleBackground() {
         const handleResize = () => {
             camera.aspect = window.innerWidth / window.innerHeight;
             camera.updateProjectionMatrix();
+            const newPixelRatio = Math.min(window.devicePixelRatio, 2);
+            renderer.setPixelRatio(newPixelRatio);
             renderer.setSize(window.innerWidth, window.innerHeight);
         };
 

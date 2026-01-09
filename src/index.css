@@ -848,15 +848,16 @@ footer {
   max-height: 100vh;
   overflow-y: auto;
   background: rgba(13, 6, 16, 0.98);
-  backdrop-filter: blur(20px);
+  backdrop-filter: blur(12px);
   z-index: 1002;
   transition: right 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  padding: clamp(60px, 10vh, 80px) 25px 40px;
+  padding: 30px 25px 40px;
   display: flex;
   flex-direction: column;
   gap: 20px;
   border-left: 1px solid rgba(255, 255, 255, 0.1);
   overscroll-behavior: contain;
+  will-change: transform;
 }
 
 .sidebar.active {
@@ -1268,42 +1269,61 @@ footer {
   bottom: 0;
   left: 0;
   width: 100%;
-  background: rgba(10, 5, 20, 0.95);
-  padding: 20px;
+  background: linear-gradient(to top, rgba(10, 5, 20, 0.95) 20%, rgba(10, 5, 20, 0) 100%);
+  /* Transparent fade */
+  padding: 40px 20px 30px;
+  /* More breathing room */
   z-index: 10002;
-  backdrop-filter: blur(10px);
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: none;
+  /* Removed blur for cleaner look, or keep minimal */
+  border-top: none;
+  /* Removed border */
   display: flex;
   justify-content: center;
-  box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.5);
+  pointer-events: none;
+  /* Let clicks pass through the gradient area */
 }
 
 .overlay-register-btn {
-  background: linear-gradient(135deg, var(--neon-purple) 0%, var(--neon-magenta) 100%);
+  pointer-events: auto;
+  /* Re-enable clicks on button */
+  background: linear-gradient(135deg, #a855f7 0%, #ec4899 100%);
+  /* Vibrant gradient */
   color: white;
-  border: none;
+  border: 1px solid rgba(255, 255, 255, 0.2);
   width: 100%;
-  max-width: 600px;
-  /* Max width for desktop */
-  padding: 18px 30px;
+  max-width: 500px;
+  /* Slightly more compact max-width */
+  padding: 16px 32px;
   font-size: 1.1rem;
-  font-weight: 600;
-  border-radius: 60px;
+  font-weight: 700;
+  border-radius: 100px;
+  /* Full pill shape */
   cursor: pointer;
-  transition: all 0.4s ease;
-  box-shadow: 0 15px 40px rgba(198, 120, 255, 0.35);
-  font-family: 'Inter', sans-serif;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  box-shadow: 0 10px 30px -10px rgba(236, 72, 153, 0.6);
+  /* Soft, colored shadow */
+  font-family: 'Space Grotesk', sans-serif;
+  /* Modern font */
   text-decoration: none;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 10px;
+  gap: 12px;
+  backdrop-filter: blur(5px);
 }
 
 .overlay-register-btn:hover {
-  transform: translateY(-5px) scale(1.02);
-  box-shadow: 0 25px 60px rgba(198, 120, 255, 0.5);
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 20px 40px -10px rgba(236, 72, 153, 0.8);
+  border-color: rgba(255, 255, 255, 0.4);
 }
+
+.overlay-register-btn:active {
+  transform: translateY(1px) scale(0.98);
+}
+
+
 
 /* Preloader */
 #loader {
@@ -1404,15 +1424,39 @@ body.sidebar-open {
   }
 
   .countdown {
-    gap: 8px;
+    gap: 6px;
+    /* Tighter gap */
+    margin-bottom: 20px;
+    flex-wrap: nowrap;
+    /* Force single row */
+    overflow-x: auto;
+    /* Handle overflow if screen is very narrow */
+    justify-content: center;
   }
 
   .countdown-item {
-    min-width: 65px;
-    padding: 10px;
-    border-radius: 12px;
+    min-width: 55px;
+    /* Reduced width */
+    padding: 8px 4px;
+    /* Reduced padding */
+    border-radius: 10px;
+    flex: 1;
+    /* Distribute space evenly */
   }
 
+  .countdown-number {
+    font-size: 1.2rem;
+    /* Smaller numbers */
+  }
+
+  .countdown-label {
+    font-size: 0.55rem;
+    /* Smaller label */
+    margin-top: 2px;
+    letter-spacing: 0.5px;
+  }
+
+  /* Allow height to adjust to content */
   .hero {
     padding: 80px 20px 40px;
     /* Reduced top/bottom padding */
