@@ -10,6 +10,7 @@ import EGamesPage from './pages/EGamesPage';
 import EventsPage from './pages/EventsPage';
 import GalaPage from './pages/GalaPage';
 import EventDetailPage from './pages/EventDetailPage';
+import AboutPage from './pages/AboutPage';
 import ScrollToTop from './components/ScrollToTop';
 import RegisterPage from './pages/RegisterPage';
 import RegisterSuccessPage from './pages/RegisterSuccessPage';
@@ -25,6 +26,7 @@ function App() {
         <Header />
         <Routes>
           <Route path="/" element={<HomePage />} />
+          <Route path="/about" element={<AboutPage />} />
           <Route path="/competitions" element={<CompetitionsPage />} />
           <Route path="/competitions/:eventId" element={<EventDetailPage />} />
           <Route path="/competitions/egames" element={<EGamesPage />} />

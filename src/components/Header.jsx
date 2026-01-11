@@ -4,7 +4,7 @@ import { Info, Calendar, Image, Mail, X, Instagram, Linkedin, Home } from 'lucid
 
 const navItems = [
     { id: 'hero', label: 'Home', icon: Home },
-    { id: 'about', label: 'About', icon: Info },
+    { id: 'about', label: 'About', icon: Info, isPage: true, path: '/about' },
     { id: 'events', label: 'Explore', icon: Calendar },
     { id: 'gallery', label: 'Gallery', icon: Image },
     { id: 'contact', label: 'Contact', icon: Mail },
@@ -57,9 +57,13 @@ export default function Header() {
                     <ul>
                         {navItems.map(item => (
                             <li key={item.id}>
-                                <a href={`#${item.id}`} onClick={(e) => { e.preventDefault(); scrollToSection(item.id); }}>
-                                    {item.label}
-                                </a>
+                                {item.isPage ? (
+                                    <Link to={item.path}>{item.label}</Link>
+                                ) : (
+                                    <a href={`#${item.id}`} onClick={(e) => { e.preventDefault(); scrollToSection(item.id); }}>
+                                        {item.label}
+                                    </a>
+                                )}
                             </li>
                         ))}
                     </ul>
@@ -94,7 +98,16 @@ export default function Header() {
                 <nav className="sidebar-nav">
                     {navItems.map(item => {
                         const Icon = item.icon;
-                        return (
+                        return item.isPage ? (
+                            <Link
+                                key={item.id}
+                                to={item.path}
+                                onClick={() => setSidebarOpen(false)}
+                            >
+                                <Icon size={20} />
+                                {item.label}
+                            </Link>
+                        ) : (
                             <a
                                 key={item.id}
                                 href={`#${item.id}`}

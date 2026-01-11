@@ -2,9 +2,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { useEffect } from 'react';
 import { Trophy, Calendar, Music, ArrowRight } from 'lucide-react';
 import Hero from '../components/Hero';
-import About from '../components/About';
 import Gallery from '../components/Gallery';
-
 import Contact from '../components/Contact';
 
 const categories = [
@@ -68,7 +66,6 @@ export default function HomePage() {
     return (
         <>
             <Hero />
-            <About />
 
             <section id="events" className="section">
                 <h2 className="section-title">Explore INCEPTA</h2>
