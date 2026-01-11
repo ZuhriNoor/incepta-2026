@@ -53,13 +53,11 @@ const rawGalleryImages = [
 ];
 
 const galleryImages = rawGalleryImages.map(src => {
-    // Ensure we don't end up with double slashes if BASE_URL ends with /
     const baseUrl = import.meta.env.BASE_URL;
     const cleanSrc = src.startsWith('/') ? src.slice(1) : src;
     return `${baseUrl}${cleanSrc}`;
 });
 
-// Fisher-Yates shuffle algorithm
 const shuffleArray = (array) => {
     const newArray = [...array];
     for (let i = newArray.length - 1; i > 0; i--) {
@@ -72,7 +70,6 @@ const shuffleArray = (array) => {
 export default function Gallery() {
     const [selectedImage, setSelectedImage] = useState(null);
 
-    // Shuffle images independently for each row on mount
     const rows = useMemo(() => {
         return [
             [...shuffleArray(galleryImages), ...shuffleArray(galleryImages)], // Row 1

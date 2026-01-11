@@ -4,7 +4,7 @@ import { Trophy, Calendar, Music, ArrowRight } from 'lucide-react';
 import Hero from '../components/Hero';
 import About from '../components/About';
 import Gallery from '../components/Gallery';
-import Stats from '../components/Stats';
+
 import Contact from '../components/Contact';
 
 const categories = [
@@ -81,7 +81,7 @@ export default function HomePage() {
             </section>
 
             <Gallery />
-            <Stats />
+
             <Contact />
         </>
     );

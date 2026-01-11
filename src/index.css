@@ -753,6 +753,83 @@ textarea.form-control {
   resize: vertical;
 }
 
+.form-control:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Submit Button States */
+.submit-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.submit-btn.submitting {
+  opacity: 0.85;
+  cursor: not-allowed;
+}
+
+.spinner {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Toast Notifications */
+.toast {
+  position: fixed;
+  top: 100px;
+  right: 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 24px;
+  border-radius: 14px;
+  backdrop-filter: blur(20px);
+  z-index: 10000;
+  transform: translateX(calc(100% + 40px));
+  opacity: 0;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  font-weight: 500;
+  max-width: 400px;
+}
+
+.toast-show {
+  transform: translateX(0);
+  opacity: 1;
+}
+
+.toast-success {
+  background: linear-gradient(135deg, rgba(34, 197, 94, 0.2) 0%, rgba(16, 185, 129, 0.15) 100%);
+  border: 1px solid rgba(34, 197, 94, 0.4);
+  color: #86efac;
+}
+
+.toast-success svg {
+  color: #22c55e;
+}
+
+.toast-error {
+  background: linear-gradient(135deg, rgba(239, 68, 68, 0.2) 0%, rgba(220, 38, 38, 0.15) 100%);
+  border: 1px solid rgba(239, 68, 68, 0.4);
+  color: #fca5a5;
+}
+
+.toast-error svg {
+  color: #ef4444;
+}
+
 /* Footer */
 footer {
   background: linear-gradient(180deg, transparent 0%, rgba(10, 5, 20, 0.95) 100%);
@@ -1045,12 +1122,12 @@ footer {
   }
 
   .gallery-track {
-    animation: scrollLeft 160s linear infinite;
+    animation: scrollLeft 320s linear infinite;
     /* Ultra slow */
   }
 
   .gallery-row.row-2 .gallery-track {
-    animation: scrollRight 140s linear infinite;
+    animation: scrollRight 280s linear infinite;
   }
 
   .gallery-img:hover {
@@ -1661,19 +1738,18 @@ body.sidebar-open {
 
 
   .gallery-track {
-    animation: scrollLeftMobile 180s linear infinite;
+    animation: scrollLeftMobile 600s linear infinite;
     gap: 8px;
   }
 
   .gallery-row.row-2 .gallery-track {
-    animation: scrollRightMobile 160s linear infinite;
+    animation: scrollRightMobile 560s linear infinite;
   }
 
   .gallery-img {
-    width: 280px;
-    /* Much larger on mobile */
-    height: 180px;
-    min-width: 280px;
+    width: 320px;
+    height: 200px;
+    min-width: 320px;
   }
 
   @keyframes scrollLeftMobile {
@@ -1702,23 +1778,23 @@ body.sidebar-open {
     width: 120%;
     /* Wider container to prevent edges showing */
     margin-left: -10%;
-    gap: 15px;
+    gap: 8px;
   }
 
   .gallery-row {
-    padding-bottom: 20px;
+    padding-bottom: 10px;
   }
 
   .gallery-track {
-    animation: scrollLeftMobile 40s linear infinite;
-    gap: 12px;
+    animation: scrollLeftMobile 160s linear infinite;
+    gap: 10px;
   }
 
   .gallery-img {
-    width: 160px;
-    height: 100px;
-    min-width: 160px;
-    flex: 0 0 160px;
+    width: 200px;
+    height: 130px;
+    min-width: 200px;
+    flex: 0 0 200px;
     border-radius: 10px;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
   }
