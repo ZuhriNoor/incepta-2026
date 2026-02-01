@@ -101,28 +101,161 @@ export default function EventDetailPage() {
             </section>
 
             <section className="event-detail-content">
-                {/* Details Grid */}
-                <div className="overlay-details-grid">
-                    {event.details?.map((detail, index) => (
-                        <div className="overlay-detail-card" key={index}>
-                            <h4>{detail.label}</h4>
-                            <p>{detail.value}</p>
-                        </div>
-                    ))}
-                </div>
+                {/* Special Layout for Applied AI (Inauguration Style) */}
+                {eventId === 'appliedai' ? (
+                    <div className="glass-card mb-12">
+                        <div className="bg-decoration-1"></div>
+                        <div className="bg-decoration-2"></div>
+                        <div className="inauguration-grid">
+                            {/* Tutor Image Section (Right Side in Inauguration Grid) */}
+                            <div className="speaker-image-wrapper">
+                                <div className="speaker-frame static">
+                                    <img
+                                        src="/CHITRA.png"
+                                        alt="Chitra VS Nair"
+                                        className="speaker-img"
+                                        style={{
+                                            transform: `scale(${event.tutors[0]?.zoom || 1.8})`,
+                                            objectPosition: event.tutors[0]?.position || 'center'
+                                        }}
+                                        onError={(e) => {
+                                            e.target.src = 'https://ui-avatars.com/api/?name=Chitra+VS+Nair&background=885DA4&color=fff&size=400';
+                                        }}
+                                    />
+                                    <div className="image-overlay"></div>
+                                    <div className="speaker-info-overlay">
+                                        <h3 className="speaker-name">CHITRA VS NAIR</h3>
+                                        <p className="speaker-role">Cloud Software Architect</p>
+                                    </div>
+                                </div>
+                                <div className="floating-badge">
+                                    <Users size={16} /> Tutor
+                                </div>
+                            </div>
 
-                {/* About Section */}
-                <div className="overlay-description">
-                    <h3>About This Event</h3>
-                    <p>{event.description}</p>
-                    {event.highlights && (
-                        <ul>
-                            {event.highlights.map((highlight, index) => (
-                                <li key={index}>{highlight}</li>
+                            {/* About Content Section (Left Side in Inauguration Grid) */}
+                            <div className="content-wrapper">
+                                <div className="meta-info">
+                                    {event.details?.map((detail, index) => (
+                                        <div className={`meta-pill pill-${index % 3 === 0 ? 'blue' : index % 3 === 1 ? 'purple' : 'pink'}`} key={index}>
+                                            {detail.label === 'Date' && <Calendar size={16} />}
+                                            {detail.label === 'Time' && <Clock size={16} />}
+                                            {detail.label === 'Venue' && <MapPin size={16} />}
+                                            <span>{detail.value}</span>
+                                        </div>
+                                    ))}
+                                </div>
+
+                                <h3 className="talk-title">About This Workshop</h3>
+                                <div className="description-text">
+                                    <p>{event.description}</p>
+                                    {event.highlights && (
+                                        <ul className="modern-list">
+                                            {event.highlights.map((highlight, index) => (
+                                                <li key={index}>{highlight}</li>
+                                            ))}
+                                        </ul>
+                                    )}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                ) : (
+                    <>
+                        {/* Details Grid */}
+                        <div className="overlay-details-grid">
+                            {event.details?.map((detail, index) => (
+                                <div className="overlay-detail-card" key={index}>
+                                    <h4>{detail.label}</h4>
+                                    <p>{detail.value}</p>
+                                </div>
                             ))}
-                        </ul>
-                    )}
-                </div>
+                        </div>
+
+                        {/* About Section */}
+                        <div className="overlay-description">
+                            <h3>About This Event</h3>
+                            <p>{event.description}</p>
+                            {event.highlights && (
+                                <ul>
+                                    {event.highlights.map((highlight, index) => (
+                                        <li key={index}>{highlight}</li>
+                                    ))}
+                                </ul>
+                            )}
+                        </div>
+                    </>
+                )}
+
+                {/* Panelists Section - Show for all events if they have it, EXCEPT appliedai which now has its custom view */}
+                {event.panelists && eventId !== 'appliedai' && (
+                    <div className="overlay-description">
+                        <div className="section-header-inline">
+                            <h3>Panelists</h3>
+                            <div className="header-line"></div>
+                        </div>
+                        <div className="panelists-grid">
+                            {event.panelists.map((panelist, index) => (
+                                <div className="panelist-card-refined" key={index}>
+                                    <div className="panelist-frame">
+                                        <img
+                                            src={panelist.image}
+                                            alt={panelist.name}
+                                            className="panelist-img-refined"
+                                            style={{
+                                                transform: `scale(${panelist.zoom || 1})`,
+                                                objectPosition: panelist.position || 'center'
+                                            }}
+                                            onError={(e) => {
+                                                e.target.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(panelist.name)}&background=885DA4&color=fff&size=400`;
+                                            }}
+                                        />
+                                        <div className="panelist-overlay"></div>
+                                        <div className="panelist-info-refined">
+                                            <h4>{panelist.name}</h4>
+                                            <p>{panelist.designation}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                )}
+
+                {/* Tutors Section - Show for all events EXCEPT appliedai (already shown in special layout) */}
+                {event.tutors && eventId !== 'appliedai' && (
+                    <div className="overlay-description">
+                        <div className="section-header-inline">
+                            <h3>Tutor</h3>
+                            <div className="header-line"></div>
+                        </div>
+                        <div className="panelists-grid">
+                            {event.tutors.map((tutor, index) => (
+                                <div className="panelist-card-refined" key={index}>
+                                    <div className="panelist-frame">
+                                        <img
+                                            src={tutor.image}
+                                            alt={tutor.name}
+                                            className="panelist-img-refined"
+                                            style={{
+                                                transform: `scale(${tutor.zoom || 1})`,
+                                                objectPosition: tutor.position || 'center'
+                                            }}
+                                            onError={(e) => {
+                                                e.target.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(tutor.name)}&background=885DA4&color=fff&size=400`;
+                                            }}
+                                        />
+                                        <div className="panelist-overlay"></div>
+                                        <div className="panelist-info-refined">
+                                            <h4>{tutor.name}</h4>
+                                            <p>{tutor.designation}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                )}
 
                 {/* Rules & Guidelines (Accordion) */}
                 {event.rulesAndGuidelines &&

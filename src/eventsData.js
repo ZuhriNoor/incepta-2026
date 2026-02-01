@@ -420,6 +420,36 @@ export const eventsData = {
       "Impact on Students & Educators",
       "Future of AI in the workforce",
     ],
+    panelists: [
+      {
+        name: "Dr. Rajasree M S",
+        designation: "Professor, CET & Former VC, KTU",
+        image: "/rajasree.png",
+        zoom: 1.3,
+        position: "center"
+      },
+      {
+        name: "Anvar Sadath",
+        designation: "CEO, KITE",
+        image: "/anwar.png",
+        zoom: 1.0,
+        position: "center"
+      },
+      {
+        name: "Naveen S",
+        designation: "AI Solutions Architect",
+        image: "/naveen.png",
+        zoom: 1.0,
+        position: "center"
+      },
+      {
+        name: "Vishnu Prasad",
+        designation: "Technical Lead, AI & Data Science",
+        image: "/visnu.png",
+        zoom: 1.1,
+        position: "center"
+      }
+    ],
     buttonText: "Register Now",
     icon: "users",
     registrationUrl: "#register-panel", // Add your MakeMyPass URL here
@@ -739,6 +769,15 @@ export const eventsData = {
         },
       ],
     },
+    tutors: [
+      {
+        name: "Chitra VS Nair",
+        designation: "Cloud Software Architect",
+        image: "/CHITRA.png",
+        zoom: 1.8,
+        position: "50% 10%"
+      }
+    ],
     buttonText: "Register Now",
     icon: "shieldCheck",
     registrationUrl: "#register-appliedai",
