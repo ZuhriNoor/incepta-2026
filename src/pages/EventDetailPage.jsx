@@ -101,8 +101,8 @@ export default function EventDetailPage() {
             </section>
 
             <section className="event-detail-content">
-                {/* Special Layout for Applied AI (Inauguration Style) */}
-                {eventId === 'appliedai' ? (
+                {/* Special Layout for Applied AI & Agentic AI (Inauguration Style) */}
+                {['appliedai', 'agenticaiworkshop'].includes(eventId) ? (
                     <div className="glass-card mb-12">
                         <div className="bg-decoration-1"></div>
                         <div className="bg-decoration-2"></div>
@@ -111,21 +111,21 @@ export default function EventDetailPage() {
                             <div className="speaker-image-wrapper">
                                 <div className="speaker-frame static">
                                     <img
-                                        src="/CHITRA.png"
-                                        alt="Chitra VS Nair"
+                                        src={event.tutors?.[0]?.image}
+                                        alt={event.tutors?.[0]?.name}
                                         className="speaker-img"
                                         style={{
-                                            transform: `scale(${event.tutors[0]?.zoom || 1.8})`,
-                                            objectPosition: event.tutors[0]?.position || 'center'
+                                            transform: `scale(${event.tutors?.[0]?.zoom || 1})`,
+                                            objectPosition: event.tutors?.[0]?.position || 'center'
                                         }}
                                         onError={(e) => {
-                                            e.target.src = 'https://ui-avatars.com/api/?name=Chitra+VS+Nair&background=885DA4&color=fff&size=400';
+                                            e.target.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(event.tutors?.[0]?.name || 'Tutor')}&background=885DA4&color=fff&size=400`;
                                         }}
                                     />
                                     <div className="image-overlay"></div>
                                     <div className="speaker-info-overlay">
-                                        <h3 className="speaker-name">CHITRA VS NAIR</h3>
-                                        <p className="speaker-role">Cloud Software Architect</p>
+                                        <h3 className="speaker-name">{event.tutors?.[0]?.name?.toUpperCase()}</h3>
+                                        <p className="speaker-role">{event.tutors?.[0]?.designation}</p>
                                     </div>
                                 </div>
                                 <div className="floating-badge">
@@ -222,8 +222,8 @@ export default function EventDetailPage() {
                     </div>
                 )}
 
-                {/* Tutors Section - Show for all events EXCEPT appliedai (already shown in special layout) */}
-                {event.tutors && eventId !== 'appliedai' && (
+                {/* Tutors Section - Show for all events EXCEPT appliedai & agenticaiworkshop (already shown in special layout) */}
+                {event.tutors && !['appliedai', 'agenticaiworkshop'].includes(eventId) && (
                     <div className="overlay-description">
                         <div className="section-header-inline">
                             <h3>Tutor</h3>

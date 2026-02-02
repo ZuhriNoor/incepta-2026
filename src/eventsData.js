@@ -774,7 +774,7 @@ export const eventsData = {
         name: "Chitra VS Nair",
         designation: "Cloud Software Architect",
         image: "/CHITRA.png",
-        zoom: 1.8,
+        zoom: 1.2,
         position: "50% 10%"
       }
     ],
@@ -865,6 +865,15 @@ export const eventsData = {
         },
       ],
     },
+    tutors: [
+      {
+        name: "Joseph Benny",
+        designation: "System Engineer at TCS",
+        image: "/jobenny.png",
+        zoom: 1.2,
+        position: "center"
+      }
+    ],
     buttonText: "Register Now",
     icon: "bot",
     registrationUrl: "https://makemypass.com/event/agentic-ai-workshop-2",

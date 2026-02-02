@@ -4241,6 +4241,7 @@ body.sidebar-open {
   /* Removed transition to keep photo static */
   border-radius: 20px;
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+  overflow: hidden;
 }
 
 .speaker-image-wrapper:hover .speaker-frame {
