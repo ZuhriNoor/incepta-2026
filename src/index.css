@@ -1795,9 +1795,257 @@ footer {
   }
 }
 
-.mb-12 {
-  margin-bottom: 3rem;
+
+/* --- Panel Discussion Section --- */
+.panel-section {
+  position: relative;
+  overflow: hidden;
 }
+
+.panel-glow-1 {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 500px;
+  height: 500px;
+  background: var(--accent-pink);
+  opacity: 0.05;
+  filter: blur(120px);
+  border-radius: 50%;
+  pointer-events: none;
+  margin-right: -10rem;
+  margin-top: -5rem;
+  z-index: 0;
+}
+
+.panel-glow-2 {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 400px;
+  height: 400px;
+  background: var(--neon-purple);
+  opacity: 0.05;
+  filter: blur(100px);
+  border-radius: 50%;
+  pointer-events: none;
+  margin-left: -5rem;
+  margin-bottom: -5rem;
+  z-index: 0;
+}
+
+.panel-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 5%;
+  position: relative;
+  z-index: 10;
+}
+
+.panel-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 3rem;
+  align-items: center;
+}
+
+@media (min-width: 1024px) {
+  .panel-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+  
+  .panel-content-wrapper {
+    order: 1;
+  }
+  
+  .panel-image-wrapper {
+    order: 2;
+  }
+}
+
+.panel-content-wrapper {
+  order: 2;
+}
+
+.panel-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  background: rgba(136, 93, 164, 0.1);
+  border: 1px solid rgba(136, 93, 164, 0.3);
+  color: var(--pale-pinkish-lavender);
+  font-size: 0.875rem;
+  font-weight: 500;
+  margin-bottom: 1rem;
+  backdrop-filter: blur(4px);
+}
+
+.panel-title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(2.25rem, 5vw, 3rem);
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  line-height: 1.1;
+  color: white;
+}
+
+.panel-title-gradient {
+  background: linear-gradient(to right, var(--neon-purple), var(--neon-magenta));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.panel-description {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 1.125rem;
+  line-height: 1.625;
+  margin-bottom: 2rem;
+  max-width: 36rem;
+}
+
+.panel-details {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.panel-detail-item {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 0.75rem;
+  padding: 1rem;
+  backdrop-filter: blur(12px);
+  transition: background-color 0.3s;
+}
+
+.panel-detail-item:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.detail-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.25rem;
+  font-weight: 600;
+}
+
+.panel-detail-item p {
+  color: white;
+  font-size: 0.875rem;
+  margin: 0;
+}
+
+.panel-cta-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: linear-gradient(to right, var(--accent-pink), var(--neon-purple));
+  color: white;
+  padding: 1rem 2rem;
+  border-radius: 9999px;
+  font-weight: 600;
+  text-decoration: none;
+  box-shadow: 0 10px 15px -3px rgba(136, 93, 164, 0.2);
+  transition: all 0.3s;
+}
+
+.panel-cta-btn:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 25px -5px rgba(136, 93, 164, 0.4);
+}
+
+.panel-image-wrapper {
+  position: relative;
+}
+
+.panel-image-glow {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top right, var(--accent-pink), var(--neon-blue));
+  border-radius: 1rem;
+  filter: blur(24px);
+  opacity: 0.4;
+  transition: opacity 0.5s;
+  transform: translate(0.5rem, 0.5rem);
+}
+
+.panel-image-wrapper:hover .panel-image-glow {
+  opacity: 0.6;
+}
+
+.panel-image-frame {
+  position: relative;
+  border-radius: 1rem;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+}
+
+.panel-image {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  transition: transform 0.7s;
+  display: block;
+}
+
+.panel-image-frame:hover .panel-image {
+  transform: scale(1.05);
+}
+
+.panel-image-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, #0a0514, transparent, transparent);
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+.panel-image-badge {
+  position: absolute;
+  bottom: 1rem;
+  left: 1rem;
+  right: 1rem;
+  padding: 1rem;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(12px);
+  border-radius: 0.75rem;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.badge-content p {
+  margin: 0;
+}
+
+.badge-title {
+  color: white;
+  font-weight: 700;
+  font-size: 0.875rem;
+}
+
+.badge-subtitle {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.75rem;
+}
+
+.badge-icon {
+  background: var(--accent-pink);
+  padding: 0.5rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+}
+
 
 .modern-list {
   list-style: none;

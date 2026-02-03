@@ -203,8 +203,7 @@ export default function EventDetailPage() {
                                             alt={panelist.name}
                                             className="panelist-img-refined"
                                             style={{
-                                                transform: `scale(${panelist.zoom || 1})`,
-                                                objectPosition: panelist.position || 'center'
+                                                objectPosition: 'top center'
                                             }}
                                             onError={(e) => {
                                                 e.target.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(panelist.name)}&background=885DA4&color=fff&size=400`;
@@ -238,8 +237,7 @@ export default function EventDetailPage() {
                                             alt={tutor.name}
                                             className="panelist-img-refined"
                                             style={{
-                                                transform: `scale(${tutor.zoom || 1})`,
-                                                objectPosition: tutor.position || 'center'
+                                                objectPosition: 'top center'
                                             }}
                                             onError={(e) => {
                                                 e.target.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(tutor.name)}&background=885DA4&color=fff&size=400`;
