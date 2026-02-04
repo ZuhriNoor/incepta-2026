@@ -19,9 +19,8 @@ export default function PanelDiscussion() {
                         </div>
 
                         <h2 className="panel-title">
-                            The Dialogue: <br />
                             <span className="panel-title-gradient">
-                                Live at CET
+                                Panel Discussion
                             </span>
                         </h2>
 
