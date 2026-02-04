@@ -10,7 +10,7 @@ export const eventCategories = {
     title: "Workshops & Events",
     description: "Learn from industry experts",
     color: "#61dafb",
-    events: ["inauguration", "keynote", "panel", "appliedai", "shapingai", "agenticaiworkshop"],
+    events: ["inauguration", "panel", "appliedai", "shapingai", "agenticaiworkshop"],
   },
   /*
   gala: {
@@ -379,28 +379,6 @@ export const eventsData = {
     buttonText: "Craft Your Prompt",
     icon: "image",
     registrationUrl: "https://app.makemypass.com/event/prompt-vision-prompt-crafting",
-  },
-  keynote: {
-    title: "Keynote Session",
-    badge: "Keynote",
-    category: "workshops",
-    tagline: "Thinking for Ourselves in the Age of AI",
-    details: [
-      { label: "Date", value: "February 6, 2026" },
-      { label: "Time", value: "11:00 AM - 12:00 PM" },
-      { label: "Venue", value: "CETAA Hall" },
-      { label: "Speaker", value: "Sourav" },
-    ],
-    description: " keynote session",
-    highlights: [
-      "keynote session",
-      "",
-      "",
-      "",
-    ],
-    buttonText: "Register Now",
-    icon: "mic",
-    registrationUrl: "#register-keynote", // Add your MakeMyPass URL here
   },
   panel: {
     title: "Panel Discussion",
