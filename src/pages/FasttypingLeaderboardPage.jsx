@@ -37,31 +37,23 @@ export default function FasttypingLeaderboardPage() {
     }, []);
 
     const getRankIcon = (position) => {
-        switch (position) {
-            case 1:
-                return (
-                    <div className="rank-with-icon">
-                        <span className="rank-number">1</span>
-                        <Crown className="rank-icon gold" size={20} />
-                    </div>
-                );
-            case 2:
-                return (
-                    <div className="rank-with-icon">
-                        <span className="rank-number">2</span>
-                        <Medal className="rank-icon silver" size={18} />
-                    </div>
-                );
-            case 3:
-                return (
-                    <div className="rank-with-icon">
-                        <span className="rank-number">3</span>
-                        <Medal className="rank-icon bronze" size={16} />
-                    </div>
-                );
-            default:
-                return <span className="rank-number">{position}</span>;
-        }
+        const renderIcon = () => {
+            switch (position) {
+                case 1: return <Crown className="rank-icon gold" size={20} />;
+                case 2: return <Medal className="rank-icon silver" size={18} />;
+                case 3: return <Medal className="rank-icon bronze" size={16} />;
+                default: return null;
+            }
+        };
+
+        return (
+            <div className="rank-container">
+                <span className="rank-number">{position}</span>
+                <div className="rank-icon-placeholder">
+                    {renderIcon()}
+                </div>
+            </div>
+        );
     };
 
     const getRankClass = (position) => {

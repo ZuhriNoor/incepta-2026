@@ -4947,11 +4947,19 @@ body.sidebar-open {
   color: #cd7f32;
 }
 
-.rank-with-icon {
+.rank-container {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
+  gap: 12px;
+  width: 100%;
+}
+
+.rank-icon-placeholder {
+  width: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .rank-number {
