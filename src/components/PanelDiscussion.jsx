@@ -41,7 +41,7 @@ export default function PanelDiscussion() {
                                     <Clock size={18} />
                                     <span>Time</span>
                                 </div>
-                                <p>2:00 PM - 4:00 PM</p>
+                                <p>9:00 AM - 12:00 PM</p>
                             </div>
                         </div>
 
