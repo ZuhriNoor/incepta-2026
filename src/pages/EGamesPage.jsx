@@ -14,7 +14,7 @@ const iconMap = {
 
 
 export default function EGamesPage() {
-    const preFestGames = ['valorant', 'bgmi', 'efootball'];
+    const preFestGames = ['bgmi', 'efootball'];
     const liveGames = ['fifa', 'minimilitia'];
 
     const preFestEvents = preFestGames.map(id => ({ id, ...eventsData[id] }));
@@ -22,7 +22,7 @@ export default function EGamesPage() {
 
     return (
         <div className="page-container">
-            <SEO title="E-Games Coliseum" description="Join the ultimate E-Sports arena at INCEPTA 2026. Valorant, BGMI, FIFA, and more." />
+            <SEO title="E-Games Coliseum" description="Join the ultimate E-Sports arena at INCEPTA 2026. BGMI, FIFA, and more." />
             {/* Hero Section */}
             <section className="page-hero" style={{ '--accent-color': '#ff0055' }}>
                 <Link to="/competitions" className="back-link">
