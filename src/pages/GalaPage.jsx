@@ -5,7 +5,6 @@ import SEO from '../components/SEO';
 
 export default function GalaPage() {
     // The Incepta Gala page is currently hidden as per user request.
-    /*
     const category = eventCategories.gala;
     const gala = eventsData.gala;
 
@@ -92,6 +91,4 @@ export default function GalaPage() {
             </div>
         </div>
     );
-    */
-    return null;
 }

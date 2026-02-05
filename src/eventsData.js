@@ -12,14 +12,12 @@ export const eventCategories = {
     color: "#61dafb",
     events: ["inauguration", "panel", "appliedai", "shapingai", "agenticaiworkshop"],
   },
-  /*
   gala: {
     title: "INCEPTA Gala",
     description: "Cultural nights of music and performances",
     color: "#ff6ac1",
-    events: ["gala", "flashmob"],
+    events: ["gala"],
   },
-  */
 };
 
 export const eventsData = {
@@ -667,29 +665,28 @@ export const eventsData = {
     icon: "gamepad",
     registrationUrl: "https://app.makemypass.com/event/coliseum-fc25",
   },
-  /*
   gala: {
     title: "INCEPTA GALA",
-    badge: "ProShow",
+    badge: "Music & Vibes",
     category: "gala",
-    tagline: "Live with Bhavin and Sharan Appu",
+    tagline: "Incepta Gala ft. CETunes 🎶",
     details: [
       { label: "Date", value: "February 5, 2026" },
-      { label: "Time", value: "6:00 PM - 8:00 PM" },
-      { label: "Venue", value: "Dhwani Stage Open Space" },
+      { label: "Time", value: "6:00 PM - 7:00 PM" },
+      { label: "Venue", value: "Gazebo" },
       { label: "Entry", value: "Free for All" },
-      { label: "Artist", value: "External artists" },
     ],
     description:
-      "The grand cultural celebration of INCEPTA'26! Two nights of entertainment, performances, and memories.",
+      "Incepta Gala 🎤✨ Live music, live vibes. Don’t miss it! Get ready for an evening of music & vibes 🎵 Music. Vibes. Memories. 🎶 Incepta Gala is happening!",
     highlights: [
-      "Pro Show with professional bands",
+      "Live music performance by CETunes",
+      "Epic cultural night with great vibes",
+      "Musical memories at the Gazebo",
     ],
-    buttonText: "Get Your Pass",
+    buttonText: "Join the Celebration",
     icon: "music",
-    registrationUrl: "#register-gala", // Add your MakeMyPass URL here
+    registrationUrl: "#",
   },
-  */
   inauguration: {
     title: "Inauguration",
     badge: "Opening Ceremony",
