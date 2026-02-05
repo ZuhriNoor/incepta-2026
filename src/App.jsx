@@ -17,6 +17,8 @@ const EventsPage = lazy(() => import('./pages/EventsPage'));
 // const GalaPage = lazy(() => import('./pages/GalaPage'));
 const EventDetailPage = lazy(() => import('./pages/EventDetailPage'));
 const AboutPage = lazy(() => import('./pages/AboutPage'));
+const FasttypingLeaderboardPage = lazy(() => import('./pages/FasttypingLeaderboardPage'));
+const FasttypingAdminPage = lazy(() => import('./pages/FasttypingAdminPage'));
 
 const TreasureHuntOnlinePage = lazy(() => import('./pages/TreasureHuntOnlinePage'));
 
@@ -34,6 +36,8 @@ function App() {
             <Route path="/about" element={<AboutPage />} />
             <Route path="/competitions" element={<CompetitionsPage />} />
             <Route path="/competitions/treasurehuntonline" element={<TreasureHuntOnlinePage />} />
+            <Route path="/competitions/fasttyping-leaderboard" element={<FasttypingLeaderboardPage />} />
+            <Route path="/admin" element={<FasttypingAdminPage />} />
             <Route path="/competitions/:eventId" element={<EventDetailPage />} />
             <Route path="/competitions/egames" element={<EGamesPage />} />
             <Route path="/competitions/egames/:eventId" element={<EventDetailPage />} />
@@ -49,7 +53,7 @@ function App() {
             <Route path="/coderush" element={<Navigate to="/competitions/coderush" replace />} />
             <Route path="/promptvision" element={<Navigate to="/competitions/promptcraft" replace />} />
             <Route path="/gnosis" element={<Navigate to="/competitions/hackathon" replace />} />
-            
+
           </Routes >
         </Suspense >
         <Footer />

@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { ArrowLeft, ShieldCheck, Zap, Sparkles, Image, Compass, Palette, MonitorPlay, Music, Gamepad2, LayoutDashboard, Trophy } from 'lucide-react';
+import { ArrowLeft, ShieldCheck, Zap, Sparkles, Image, Compass, Palette, MonitorPlay, Music, Gamepad2, LayoutDashboard, Trophy, Keyboard } from 'lucide-react';
 import { eventsData, eventCategories } from '../eventsData';
 import SEO from '../components/SEO';
 
@@ -13,7 +13,8 @@ const iconMap = {
     compass: Compass,
     music: Music,
     gamepad: Gamepad2,
-    trophy: Trophy
+    trophy: Trophy,
+    keyboard: Keyboard
 };
 
 export default function CompetitionsPage() {
@@ -63,6 +64,18 @@ export default function CompetitionsPage() {
                         <h3 className="event-title">COLISEUM</h3>
                         <p className="event-description">E-Sports & Gaming Arena</p>
                         <div className="event-badge-small">E-Games</div>
+                    </Link>
+                    {/* Fasttyping Leaderboard Card */}
+                    <Link
+                        to="/competitions/fasttyping-leaderboard"
+                        className="event-card"
+                    >
+                        <div className="event-icon">
+                            <Keyboard size={32} />
+                        </div>
+                        <h3 className="event-title">Fasttyping Leaderboard</h3>
+                        <p className="event-description">View the fastest typists rankings</p>
+                        <div className="event-badge-small">Leaderboard</div>
                     </Link>
                 </div>
             </section>
