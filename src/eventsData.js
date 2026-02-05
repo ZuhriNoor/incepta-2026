@@ -10,7 +10,7 @@ export const eventCategories = {
     title: "Workshops & Events",
     description: "Learn from industry experts",
     color: "#61dafb",
-    events: ["inauguration", "panel", "appliedai", "shapingai", "agenticaiworkshop"],
+    events: ["inauguration", "panel", "appliedai", "agenticaiworkshop"],
   },
   gala: {
     title: "INCEPTA Gala",
@@ -32,6 +32,7 @@ export const eventsData = {
       { label: "Time", value: "9:00 AM - 9:00 PM" },
       { label: "Venue", value: "MCA Main LAB" },
       { label: "Focus", value: "AI Applications" },
+      { label: "Reg Fee", value: "₹500 / Team" },
     ],
 
     description:
@@ -184,6 +185,8 @@ export const eventsData = {
       { label: "Time", value: "1:00 PM - 3:00 PM" },
       { label: "Venue", value: "MCA Project LAB" },
       { label: "Platform", value: "HackerRank" },
+      { label: "Reg Fee", value: "₹50" },
+      { label: "Prize Pool", value: "₹5,000" },
     ],
 
     description:
@@ -253,6 +256,8 @@ export const eventsData = {
       { label: "Time", value: "1:00 PM - 4:00 PM" },
       { label: "Venue", value: "MCA Project LAB" },
       { label: "Format", value: "AI-assisted Full Stack" },
+      { label: "Reg Fee", value: "₹200" },
+      { label: "Prize Pool", value: "₹7,000" },
     ],
 
     description:
@@ -323,8 +328,8 @@ export const eventsData = {
       { label: "Date", value: "February 5, 2026" },
       { label: "Time", value: "3:00 PM - 4:00 PM" },
       { label: "Venue", value: "MCA Project LAB II" },
-      { label: "Prize Pool", value: "₹3,000" },
       { label: "Reg Fee", value: "₹50" },
+      { label: "Prize Pool", value: "₹3,000" },
     ],
 
     description:
@@ -385,7 +390,7 @@ export const eventsData = {
     tagline: "From Code to Co-Creation",
     details: [
       { label: "Date", value: "February 5, 2026" },
-      { label: "Time", value: "2:00 PM - 4:00 PM" },
+      { label: "Time", value: " 9:00 AM - 12:00 PM" },
       { label: "Venue", value: "MCA Seminar Hall" },
       { label: "Speaker", value: "Aaron" },
     ],
@@ -683,9 +688,7 @@ export const eventsData = {
       "Epic cultural night with great vibes",
       "Musical memories at the Gazebo",
     ],
-    buttonText: "Join the Celebration",
     icon: "music",
-    registrationUrl: "#",
   },
   inauguration: {
     title: "Inauguration",
@@ -726,6 +729,7 @@ export const eventsData = {
       { label: "Date", value: "February 4, 2026" },
       { label: "Time", value: "9:00 AM - 1:00 PM" },
       { label: "Venue", value: "MCA Seminar Hall" },
+      { label: "Reg Fee", value: "₹150" },
     ],
     description:
       "Learn how to apply artificial intelligence techniques to cybersecurity challenges and threat detection. This hands-on workshop covers AI-powered security solutions and real-world applications.",
@@ -757,6 +761,7 @@ export const eventsData = {
     icon: "shieldCheck",
     registrationUrl: "#register-appliedai",
   },
+  /*
   shapingai: {
     title: "Shaping the AI Future",
     badge: "Session",
@@ -788,6 +793,7 @@ export const eventsData = {
     icon: "lightbulb",
     registrationUrl: "#register-shapingai",
   },
+  */
   flashmob: {
     title: "FlashMob and Banner Release",
     badge: "Cultural Event",
@@ -821,6 +827,7 @@ export const eventsData = {
       { label: "Time", value: "9:00 AM - 4:00 PM" },
       { label: "Venue", value: "MCA Main LAB" },
       { label: "Format", value: "Hands-on" },
+      { label: "Reg Fee", value: "₹300" },
       { label: "Certificate", value: "Provided" },
     ],
     description:

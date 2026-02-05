@@ -128,38 +128,6 @@ export default function FasttypingLeaderboardPage() {
                     </div>
                 ) : (
                     <>
-                        {/* Top 3 Podium */}
-                        {topThree.length > 0 && (
-                            <div className="podium-container">
-                                {topThree.map((entry, index) => (
-                                    <div
-                                        key={index}
-                                        className={`podium-card podium-${entry.position}`}
-                                    >
-                                        <div className="podium-rank">
-                                            {getRankIcon(entry.position)}
-                                        </div>
-                                        <h3 className="podium-name">{entry.name}</h3>
-                                        <p className="podium-department">{entry.department}</p>
-                                        <div className="podium-stats">
-                                            <div className="podium-stat">
-                                                <Zap size={16} />
-                                                <span className="stat-value">{entry.wpm}</span>
-                                                <span className="stat-label">WPM</span>
-                                            </div>
-                                            <div className="podium-stat">
-                                                <Target size={16} />
-                                                <span className="stat-value">{entry.accuracy}%</span>
-                                                <span className="stat-label">Accuracy</span>
-                                            </div>
-                                        </div>
-                                        <div className="podium-score">
-                                            Score: <strong>{entry.score}</strong>
-                                        </div>
-                                    </div>
-                                ))}
-                            </div>
-                        )}
 
                         {/* Rest of Leaderboard */}
                         {fullList.length > 0 && (

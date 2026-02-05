@@ -79,16 +79,6 @@ export default function GalaPage() {
                 </div>
             </section>
 
-            <div className="floating-cta gala-cta-enhanced">
-                <a
-                    href={gala.registrationUrl}
-                    className="gala-register-btn"
-                >
-                    <PartyPopper size={20} />
-                    {gala.buttonText}
-                    <ArrowRight size={20} />
-                </a>
-            </div>
         </div>
     );
 }

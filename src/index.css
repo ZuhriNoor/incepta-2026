@@ -4882,13 +4882,15 @@ body.sidebar-open {
   background: linear-gradient(135deg, rgba(63, 40, 78, 0.4) 0%, rgba(20, 10, 27, 0.6) 100%);
   border-radius: 20px;
   border: 1px solid rgba(175, 132, 203, 0.2);
-  overflow: hidden;
+  overflow-x: auto;
   backdrop-filter: blur(20px);
+  -webkit-overflow-scrolling: touch;
 }
 
 .leaderboard-table {
   width: 100%;
   border-collapse: collapse;
+  min-width: 600px;
 }
 
 .leaderboard-table thead {
