@@ -39,11 +39,26 @@ export default function FasttypingLeaderboardPage() {
     const getRankIcon = (position) => {
         switch (position) {
             case 1:
-                return <Crown className="rank-icon gold" size={28} />;
+                return (
+                    <div className="rank-with-icon">
+                        <span className="rank-number">1</span>
+                        <Crown className="rank-icon gold" size={20} />
+                    </div>
+                );
             case 2:
-                return <Medal className="rank-icon silver" size={26} />;
+                return (
+                    <div className="rank-with-icon">
+                        <span className="rank-number">2</span>
+                        <Medal className="rank-icon silver" size={18} />
+                    </div>
+                );
             case 3:
-                return <Medal className="rank-icon bronze" size={24} />;
+                return (
+                    <div className="rank-with-icon">
+                        <span className="rank-number">3</span>
+                        <Medal className="rank-icon bronze" size={16} />
+                    </div>
+                );
             default:
                 return <span className="rank-number">{position}</span>;
         }
@@ -60,7 +75,8 @@ export default function FasttypingLeaderboardPage() {
 
     // Get top 3 for podium display
     const topThree = leaderboard.slice(0, 3);
-    const restOfList = leaderboard.slice(3);
+    // Show all in the table as requested
+    const fullList = leaderboard;
 
     return (
         <div className="page-container">
@@ -154,7 +170,7 @@ export default function FasttypingLeaderboardPage() {
                         )}
 
                         {/* Rest of Leaderboard */}
-                        {restOfList.length > 0 && (
+                        {fullList.length > 0 && (
                             <div className="leaderboard-table-container">
                                 <table className="leaderboard-table">
                                     <thead>
@@ -168,7 +184,7 @@ export default function FasttypingLeaderboardPage() {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {restOfList.map((entry, index) => (
+                                        {fullList.map((entry, index) => (
                                             <tr
                                                 key={index}
                                                 className={`leaderboard-row ${getRankClass(entry.position)}`}

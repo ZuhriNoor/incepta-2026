@@ -4947,6 +4947,13 @@ body.sidebar-open {
   color: #cd7f32;
 }
 
+.rank-with-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
 .rank-number {
   display: inline-flex;
   align-items: center;
